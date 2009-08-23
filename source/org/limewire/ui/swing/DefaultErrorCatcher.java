@@ -21,7 +21,7 @@ public class DefaultErrorCatcher {
     private static volatile boolean storeCaughtBugs = false;
     private static final List<Throwable> storedBugs = new CopyOnWriteArrayList<Throwable>(); 
 
-	static void install() {
+	public static void install() {
 	    System.setProperty("sun.awt.exception.handler",
 	                       DefaultErrorCatcher.class.getName());
     }
