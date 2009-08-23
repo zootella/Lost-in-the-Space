@@ -3,33 +3,26 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
 	<classpathentry kind="src" path="resource"/>
 	<classpathentry kind="src" path="source"/>
-	<classpathentry kind="output" path="bin"/>
-
 	<classpathentry kind="lib" path="work/_apache_commons-codec-1.3.jar"/>
 	<classpathentry kind="lib" path="work/_apache_commons-logging.jar"/>
 	<classpathentry kind="lib" path="work/_apache_commons-math-1.2.jar"/>
 	<classpathentry kind="lib" path="work/_apache_httpclient-4.0-beta2.jar"/>
 	<classpathentry kind="lib" path="work/_apache_httpcore-4.0.jar"/>
 	<classpathentry kind="lib" path="work/_apache_httpcore-nio-4.0.jar"/>
-
 	<classpathentry kind="lib" path="work/_base_google-collect-1.0-rc2.jar"/>
 	<classpathentry kind="lib" path="work/_base_icu4j.jar"/>
 	<classpathentry kind="lib" path="work/_base_jcip-annotations.jar"/>
 	<classpathentry kind="lib" path="work/_base_log4j.jar"/>
 	<classpathentry kind="lib" path="work/_base_mime-util.jar"/>
-
 	<classpathentry kind="lib" path="work/_browser_base64-2.2.2.jar"/>
 	<classpathentry kind="lib" path="work/_browser_jna-3.1.0.jar"/>
 	<classpathentry kind="lib" path="work/_browser_mozdom4java.jar"/>
 	<classpathentry kind="lib" path="work/_browser_MozillaGlue-1.9.jar"/>
 	<classpathentry kind="lib" path="work/_browser_MozillaInterfaces-1.9.jar"/>
 	<classpathentry kind="lib" path="work/_browser_mozswing.jar"/>
-
 	<classpathentry kind="lib" path="work/_daap_daap.jar"/>
 	<classpathentry kind="lib" path="work/_daap_jmdns.jar"/>
-
 	<classpathentry kind="lib" path="work/_desktop_jdic.jar"/>
-
 	<classpathentry kind="lib" path="work/_facebook_activation-1.1.jar"/>
 	<classpathentry kind="lib" path="work/_facebook_commons-lang-2.2.jar"/>
 	<classpathentry kind="lib" path="work/_facebook_fb-java-api-2.1.1.jar"/>
@@ -39,20 +32,16 @@
 	<classpathentry kind="lib" path="work/_facebook_json-20070829.jar"/>
 	<classpathentry kind="lib" path="work/_facebook_runtime-0.4.1.3.jar"/>
 	<classpathentry kind="lib" path="work/_facebook_stax-api-1.0-2.jar"/>
-
 	<classpathentry kind="lib" path="work/_guice_aopalliance.jar"/>
 	<classpathentry kind="lib" path="work/_guice_guice-2.0-snapshot-20090610.jar"/>
 	<classpathentry kind="lib" path="work/_guice_guice-assistedinject-snapshot20090512.jar"/>
-
 	<classpathentry kind="lib" path="work/_jabber_smack.jar"/>
 	<classpathentry kind="lib" path="work/_jabber_smackx.jar"/>
 	<classpathentry kind="lib" path="work/_jabber_smackx-debug.jar"/>
-
 	<classpathentry kind="lib" path="work/_net_clink.jar"/>
 	<classpathentry kind="lib" path="work/_net_dnsjava-2.0.6.jar"/>
 	<classpathentry kind="lib" path="work/_net_onion-common.jar"/>
 	<classpathentry kind="lib" path="work/_net_onion-fec.jar"/>
-
 	<classpathentry kind="lib" path="work/_play_jaudiotagger.jar"/>
 	<classpathentry kind="lib" path="work/_play_jcraft.jar"/>
 	<classpathentry kind="lib" path="work/_play_jflac.jar"/>
@@ -62,9 +51,7 @@
 	<classpathentry kind="lib" path="work/_play_mp3spi.jar"/>
 	<classpathentry kind="lib" path="work/_play_tritonus.jar"/>
 	<classpathentry kind="lib" path="work/_play_vorbisspi.jar"/>
-
 	<classpathentry kind="lib" path="work/_store_hsqldb-1.8.0.10.jar"/>
-
 	<classpathentry kind="lib" path="work/_ui_AppFramework.jar"/>
 	<classpathentry kind="lib" path="work/_ui_EventBus-1.2b.jar"/>
 	<classpathentry kind="lib" path="work/_ui_glazedlists-snapshot20090628_java15.jar"/>
@@ -72,14 +59,13 @@
 	<classpathentry kind="lib" path="work/_ui_miglayout-3.7-swing.jar"/>
 	<classpathentry kind="lib" path="work/_ui_swing-worker-1.2.jar"/>
 	<classpathentry kind="lib" path="work/_ui_swingx-1.0.jar"/>
-
 	<classpathentry kind="lib" path="work/_us_gettext-commons.jar"/>
 	<classpathentry kind="lib" path="work/_us_messages.jar"/>
-
 	<classpathentry kind="lib" path="work/_desktop-LINUX_jdic_stub.jar"/>
 	<classpathentry kind="lib" path="work/_desktop-MAC_MRJAdapter.jar"/>
 	<classpathentry kind="lib" path="work/_itunes-WIN_iTunes-0.0.1.jar"/>
 	<classpathentry kind="lib" path="work/_itunes-WIN_jacob-1.14.3.jar"/>
 	<classpathentry kind="lib" path="work/_desktop-WIN_jdic_stub.jar"/>
-
+	<classpathentry kind="lib" path="work/cheat.jar"/>
+	<classpathentry kind="output" path="bin"/>
 </classpath>
