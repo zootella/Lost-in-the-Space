@@ -1,5 +1,8 @@
 package lost.in.the.space;
 
+import java.lang.reflect.Method;
+import java.util.Locale;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.limewire.core.settings.ConnectionSettings;
@@ -42,7 +45,39 @@ import com.limegroup.gnutella.util.LimeWireUtils;
 import com.limegroup.gnutella.util.LogUtils;
 
 /** Initializes (creates, starts, & displays) the LimeWire Core & UI. */
-public final class Initializer {
+public final class Start {
+	
+	// Code taken from LimeWire's Main
+
+    public static void main(String[] args) {
+        try {
+            if (isMacOSX()) {
+            	// Don't show the icon in the dock
+                System.setProperty("apple.awt.UIElement", "true");
+                // Register GURL to receive AppleEvents, such as magnet links.
+                // Use reflection to not slow down non-OSX systems.
+                // "GURLHandler.getInstance().register();"
+                Class<?> clazz = Class.forName("org.limewire.ui.swing.GURLHandler");
+                Method getInstance = clazz.getMethod("getInstance", new Class[0]);
+                Object gurl = getInstance.invoke(null, new Object[0]);
+                Method register = gurl.getClass().getMethod("register", new Class[0]);
+                register.invoke(gurl, new Object[0]);
+            }        
+            
+            Start initializer = new Start();
+            initializer.initialize(args);
+        } catch(Throwable t) {
+            t.printStackTrace();
+            System.exit(1);
+        }
+    }
+
+    /** Determines if this is running on OS X. */
+    private static boolean isMacOSX() {
+        return System.getProperty("os.name", "").toLowerCase(Locale.US).startsWith("mac os x");
+    }
+
+	// Code taken from LimeWire's Initializer
 
     /** The log -- set only after Log4J can be determined. */
     private final Log LOG;
@@ -67,13 +102,13 @@ public final class Initializer {
     @Inject private Provider<NIODispatcher> nioDispatcher;
     @Inject private Provider<UPnPManager> upnpManager;
     
-    Initializer() {
+    Start() {
         // If Log4J is available then remove the NoOpLog
         if (LogUtils.isLog4JAvailable()) {
             System.getProperties().remove("org.apache.commons.logging.Log");
         }
         
-        LOG = LogFactory.getLog(Initializer.class);
+        LOG = LogFactory.getLog(Start.class);
         
         if(LOG.isTraceEnabled()) {
             startMemory = Runtime.getRuntime().totalMemory()
@@ -229,7 +264,7 @@ public final class Initializer {
         Injector injector = Guice.createInjector(Stage.PRODUCTION, new LimeWireModule(), new AbstractModule() {
             @Override
             protected void configure() {
-                requestInjection(Initializer.this);
+                requestInjection(Start.this);
             }
         });
         stopwatch.resetAndLog("Create injector");
