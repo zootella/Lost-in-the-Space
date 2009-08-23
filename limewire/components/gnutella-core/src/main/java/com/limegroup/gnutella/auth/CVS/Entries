@@ -1,0 +1,16 @@
+/.cvsignore/1.2/Tue Mar  7 20:00:20 2006//Tprod-5-2-13-java16
+/ContentAuthority.java/1.4/Mon Jun  8 19:57:58 2009//Tprod-5-2-13-java16
+/ContentAuthorityFactory.java/1.1/Thu Aug 16 22:03:10 2007//Tprod-5-2-13-java16
+/ContentCache.java/1.8/Wed Feb 25 23:19:30 2009//Tprod-5-2-13-java16
+/ContentManager.java/1.20/Mon Jun  8 19:57:58 2009//Tprod-5-2-13-java16
+/ContentResponseData.java/1.5/Mon Jun  8 19:57:58 2009//Tprod-5-2-13-java16
+/ContentResponseObserver.java/1.4/Mon Jan  5 22:45:03 2009//Tprod-5-2-13-java16
+/IpPortContentAuthority.java/1.8/Mon Jun  8 19:57:58 2009//Tprod-5-2-13-java16
+/IpPortContentAuthorityFactory.java/1.1/Wed Aug 22 18:14:22 2007//Tprod-5-2-13-java16
+/IpPortContentAuthorityFactoryImpl.java/1.1/Wed Aug 22 18:14:22 2007//Tprod-5-2-13-java16
+/LimeWireContentAuthModule.java/1.1/Thu Oct 30 19:28:53 2008//Tprod-5-2-13-java16
+/SettingsBasedContentAuthority.java/1.9/Mon Jun  8 19:57:58 2009//Tprod-5-2-13-java16
+/UrnValidator.java/1.1/Thu Oct 30 19:28:53 2008//Tprod-5-2-13-java16
+/UrnValidatorImpl.java/1.1/Thu Oct 30 19:28:53 2008//Tprod-5-2-13-java16
+/ValidationEvent.java/1.1/Thu Oct 30 19:28:53 2008//Tprod-5-2-13-java16
+D

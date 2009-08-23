@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="build">
+	<target name="take" description="Copy down necessary files">
+
+		<!-- Delete destination folders so they start out blank -->
+		<delete dir="resource"/>
+		<delete dir="source"/>
+		<delete dir="work"/>
+
+		<!-- Start with launch files -->
+		<copy todir="work">
+			<fileset dir="deploy"/>
+		</copy>
+
+		<!-- Copy down trees of resource files that will end up in the main jar -->
+		<copy todir="resource">
+			<fileset dir="limewire/components/common/src/main/resources"/>
+			<fileset dir="limewire/components/gnutella-core/src/main/resources"/>
+			<fileset dir="limewire/private-components/swingui/src/main/resources"/>
+		</copy>
+
+		<!-- Copy down source code from LimeWire 5.2.13 -->
+		<copy todir="source">
+			<fileset dir="limewire/components/bittorrent-api/src/main/java">         <include name="**/*.java"/></fileset>
+			<fileset dir="limewire/components/collection/src/main/java">             <include name="**/*.java"/></fileset>
+			<fileset dir="limewire/components/common/src/main/java">                 <include name="**/*.java"/></fileset>
+			<fileset dir="limewire/components/core-api/src/main/java">               <include name="**/*.java"/></fileset>
+
+			<fileset dir="limewire/components/core-glue/src/main/java">              <include name="**/*.java"/></fileset>
+			<fileset dir="limewire/components/core-settings/src/main/java">          <include name="**/*.java"/></fileset>
+			<!--                             /CVS/                                                                     -->
+			<fileset dir="limewire/components/facebook/src/main/java">               <include name="**/*.java"/></fileset>
+
+			<fileset dir="limewire/components/friend/src/main/java">                 <include name="**/*.java"/></fileset>
+			<fileset dir="limewire/components/geocode/src/main/java">                <include name="**/*.java"/></fileset>
+			<fileset dir="limewire/components/gnutella-core/src/main/java">          <include name="**/*.java"/></fileset>
+			<fileset dir="limewire/components/http/src/main/java">                   <include name="**/*.java"/></fileset>
+
+			<fileset dir="limewire/components/io/src/main/java">                     <include name="**/*.java"/></fileset>
+			<!--                             /jingle/                                                                  -->
+			<fileset dir="limewire/components/libtorrent/src/main/java">             <include name="**/*.java"/></fileset>
+			<fileset dir="limewire/components/lwsserver/src/main/java">              <include name="**/*.java"/></fileset>
+
+			<fileset dir="limewire/components/mojito/src/main/java">                 <include name="**/*.java"/></fileset>
+			<fileset dir="limewire/components/mojito-ui/src/main/java">              <include name="**/*.java"/></fileset>
+			<fileset dir="limewire/components/net/src/main/java">                    <include name="**/*.java"/></fileset>
+			<fileset dir="limewire/components/nio/src/main/java">                    <include name="**/*.java"/></fileset>
+
+			<fileset dir="limewire/components/player/src/main/java">                 <include name="**/*.java"/></fileset>
+			<fileset dir="limewire/components/player-api/src/main/java">             <include name="**/*.java"/></fileset>
+			<fileset dir="limewire/components/promotion/src/main/java">              <include name="**/*.java"/></fileset>
+			<!--                             /resources/                                                               -->
+
+			<fileset dir="limewire/components/rudp/src/main/java">                   <include name="**/*.java"/></fileset>
+			<fileset dir="limewire/components/security/src/main/java">               <include name="**/*.java"/></fileset>
+			<fileset dir="limewire/components/setting/src/main/java">                <include name="**/*.java"/></fileset>
+			<fileset dir="limewire/components/statistic/src/main/java">              <include name="**/*.java"/></fileset>
+
+			<fileset dir="limewire/components/swarm/src/main/java">                  <include name="**/*.java"/></fileset>
+			<!--                             /test-util/                                                               -->
+			<fileset dir="limewire/components/xmpp/src/main/java">                   <include name="**/*.java"/></fileset>
+			<fileset dir="limewire/components/xmpp-api/src/main/java">               <include name="**/*.java"/></fileset>
+
+			<fileset dir="limewire/private-components/integrated-ui/src/main/java">  <include name="**/*.java"/></fileset>
+			<fileset dir="limewire/private-components/mock-core/src/main/java">      <include name="**/*.java"/></fileset>
+			<fileset dir="limewire/private-components/swingui/src/main/java">        <include name="**/*.java"/></fileset>
+		</copy>
+
+		<!-- Copy down jars -->
+		<copy todir="work">      <fileset dir="limewire/lib/jars">        <include name="*.jar"/></fileset></copy>
+		<copy todir="work/linux"><fileset dir="limewire/lib/jars/linux">  <include name="*.jar"/></fileset></copy>
+		<copy todir="work/mac">  <fileset dir="limewire/lib/jars/osx">    <include name="*.jar"/></fileset></copy>
+		<copy todir="work/win">  <fileset dir="limewire/lib/jars/windows"><include name="*.jar"/></fileset></copy>
+
+		<!-- Copy down native libraries -->
+		<copy todir="work"><fileset dir="limewire/lib/native/linux">  <include name="*.so"/>    </fileset></copy>
+		<copy todir="work"><fileset dir="limewire/lib/native/osx">    <include name="*.jnilib"/></fileset></copy>
+		<copy todir="work"><fileset dir="limewire/lib/native/windows"><include name="*.dll"/>   </fileset></copy>
+
+		<!-- Rename jars to group them together, stop if any are missing, and notice extra ones that don't get renamed -->
+		<move file="work/commons-codec-1.3.jar"                     tofile="work/_apache_commons-codec-1.3.jar"/>
+		<move file="work/commons-logging.jar"                       tofile="work/_apache_commons-logging.jar"/>
+		<move file="work/commons-math-1.2.jar"                      tofile="work/_apache_commons-math-1.2.jar"/>
+		<move file="work/httpclient-4.0-beta2.jar"                  tofile="work/_apache_httpclient-4.0-beta2.jar"/>
+		<move file="work/httpcore-4.0.jar"                          tofile="work/_apache_httpcore-4.0.jar"/>
+		<move file="work/httpcore-nio-4.0.jar"                      tofile="work/_apache_httpcore-nio-4.0.jar"/>
+
+		<move file="work/google-collect-1.0-rc2.jar"                tofile="work/_base_google-collect-1.0-rc2.jar"/>
+		<move file="work/icu4j.jar"                                 tofile="work/_base_icu4j.jar"/>
+		<move file="work/jcip-annotations.jar"                      tofile="work/_base_jcip-annotations.jar"/>
+		<move file="work/log4j.jar"                                 tofile="work/_base_log4j.jar"/>
+		<move file="work/mime-util.jar"                             tofile="work/_base_mime-util.jar"/>
+
+		<move file="work/base64-2.2.2.jar"                          tofile="work/_browser_base64-2.2.2.jar"/>
+		<move file="work/jna-3.1.0.jar"                             tofile="work/_browser_jna-3.1.0.jar"/>
+		<move file="work/mozdom4java.jar"                           tofile="work/_browser_mozdom4java.jar"/>
+		<move file="work/MozillaGlue-1.9.jar"                       tofile="work/_browser_MozillaGlue-1.9.jar"/>
+		<move file="work/MozillaInterfaces-1.9.jar"                 tofile="work/_browser_MozillaInterfaces-1.9.jar"/>
+		<move file="work/mozswing.jar"                              tofile="work/_browser_mozswing.jar"/>
+
+		<move file="work/daap.jar"                                  tofile="work/_daap_daap.jar"/>
+		<move file="work/jmdns.jar"                                 tofile="work/_daap_jmdns.jar"/>
+
+		<move file="work/jdic.jar"                                  tofile="work/_desktop_jdic.jar"/>
+
+		<move file="work/activation-1.1.jar"                        tofile="work/_facebook_activation-1.1.jar"/>
+		<move file="work/commons-lang-2.2.jar"                      tofile="work/_facebook_commons-lang-2.2.jar"/>
+		<move file="work/fb-java-api-2.1.1.jar"                     tofile="work/_facebook_fb-java-api-2.1.1.jar"/>
+		<move file="work/fb-java-api-schema-2.1.1.jar"              tofile="work/_facebook_fb-java-api-schema-2.1.1.jar"/>
+		<move file="work/jaxb-api-2.1.jar"                          tofile="work/_facebook_jaxb-api-2.1.jar"/>
+		<move file="work/jaxb-impl-2.1.9.jar"                       tofile="work/_facebook_jaxb-impl-2.1.9.jar"/>
+		<move file="work/json-20070829.jar"                         tofile="work/_facebook_json-20070829.jar"/>
+		<move file="work/runtime-0.4.1.3.jar"                       tofile="work/_facebook_runtime-0.4.1.3.jar"/>
+		<move file="work/stax-api-1.0-2.jar"                        tofile="work/_facebook_stax-api-1.0-2.jar"/>
+
+		<move file="work/aopalliance.jar"                           tofile="work/_guice_aopalliance.jar"/>
+		<move file="work/guice-2.0-snapshot-20090610.jar"           tofile="work/_guice_guice-2.0-snapshot-20090610.jar"/>
+		<move file="work/guice-assistedinject-snapshot20090512.jar" tofile="work/_guice_guice-assistedinject-snapshot20090512.jar"/>
+
+		<move file="work/smack.jar"                                 tofile="work/_jabber_smack.jar"/>
+		<move file="work/smackx.jar"                                tofile="work/_jabber_smackx.jar"/>
+		<move file="work/smackx-debug.jar"                          tofile="work/_jabber_smackx-debug.jar"/>
+
+		<move file="work/clink.jar"                                 tofile="work/_net_clink.jar"/>
+		<move file="work/dnsjava-2.0.6.jar"                         tofile="work/_net_dnsjava-2.0.6.jar"/>
+		<move file="work/onion-common.jar"                          tofile="work/_net_onion-common.jar"/>
+		<move file="work/onion-fec.jar"                             tofile="work/_net_onion-fec.jar"/>
+
+		<move file="work/jaudiotagger.jar"                          tofile="work/_play_jaudiotagger.jar"/>
+		<move file="work/jcraft.jar"                                tofile="work/_play_jcraft.jar"/>
+		<move file="work/jflac.jar"                                 tofile="work/_play_jflac.jar"/>
+		<move file="work/jl.jar"                                    tofile="work/_play_jl.jar"/>
+		<move file="work/jogg.jar"                                  tofile="work/_play_jogg.jar"/>
+		<move file="work/jorbis.jar"                                tofile="work/_play_jorbis.jar"/>
+		<move file="work/mp3spi.jar"                                tofile="work/_play_mp3spi.jar"/>
+		<move file="work/tritonus.jar"                              tofile="work/_play_tritonus.jar"/>
+		<move file="work/vorbisspi.jar"                             tofile="work/_play_vorbisspi.jar"/>
+
+		<move file="work/hsqldb-1.8.0.10.jar"                       tofile="work/_store_hsqldb-1.8.0.10.jar"/>
+
+		<move file="work/AppFramework.jar"                          tofile="work/_ui_AppFramework.jar"/>
+		<move file="work/EventBus-1.2b.jar"                         tofile="work/_ui_EventBus-1.2b.jar"/>
+		<move file="work/glazedlists-snapshot20090628_java15.jar"   tofile="work/_ui_glazedlists-snapshot20090628_java15.jar"/>
+		<move file="work/jxlayer-4.0.jar"                           tofile="work/_ui_jxlayer-4.0.jar"/>
+		<move file="work/miglayout-3.7-swing.jar"                   tofile="work/_ui_miglayout-3.7-swing.jar"/>
+		<move file="work/swing-worker-1.2.jar"                      tofile="work/_ui_swing-worker-1.2.jar"/>
+		<move file="work/swingx-1.0.jar"                            tofile="work/_ui_swingx-1.0.jar"/>
+
+		<move file="work/gettext-commons.jar"                       tofile="work/_us_gettext-commons.jar"/>
+		<move file="work/messages.jar"                              tofile="work/_us_messages.jar"/>
+
+		<move file="work/linux/jdic_stub.jar"                       tofile="work/_desktop-LINUX_jdic_stub.jar"/>
+		<move file="work/mac/MRJAdapter.jar"                        tofile="work/_desktop-MAC_MRJAdapter.jar"/>
+		<move file="work/win/iTunes-0.0.1.jar"                      tofile="work/_itunes-WIN_iTunes-0.0.1.jar"/>
+		<move file="work/win/jacob-1.14.3.jar"                      tofile="work/_itunes-WIN_jacob-1.14.3.jar"/>
+		<move file="work/win/jdic_stub.jar"                         tofile="work/_desktop-WIN_jdic_stub.jar"/>
+
+	</target>
+	<target name="build" description="Compile and package the source code into a jar">
+
+		<!-- Delete temporary folder and output files to make everything from scratch -->
+		<delete dir="ant"/>
+		<delete file="work/gnutella.jar"/>
+		<delete file="work/launch-linux.jar"/>
+		<delete file="work/launch-mac.jar"/>
+		<delete file="work/launch-win.jar"/>
+
+		<!-- Copy in resource files to get bundled into the jar -->
+		<copy todir="ant">
+			<fileset dir="resource"/>
+		</copy>
+
+		<!--
+		Compile all the java files into class files
+
+		fork = yes         Run the compiler in a separate process
+		memoryinitialzie   Give the compiler more memory than the default
+		memorymaximumsize
+		debug = yes        Include debug information in the class files
+		destdir            Where to put the class files
+		source and target  Use Java version 1.6
+		-->
+		<javac
+			fork="yes"
+			memoryinitialsize="256m"
+			memorymaximumsize="256m"
+			debug="yes"
+			destdir="ant"
+			source="1.6"
+			target="1.6">
+
+			<!-- Folders that have trees of java files to compile -->
+			<src path="source"/>
+
+			<!-- Tell the Java compiler where jar files are that the code above uses -->
+			<classpath>
+				<fileset dir="work">
+					<include name="*.jar"/>
+				</fileset>
+			</classpath>
+		</javac>
+
+		<!-- List all the cross-platform jars for the main jar classpath -->
+		<path id="class.path.list">
+
+			<pathelement location="_apache_commons-codec-1.3.jar"/>
+			<pathelement location="_apache_commons-logging.jar"/>
+			<pathelement location="_apache_commons-math-1.2.jar"/>
+			<pathelement location="_apache_httpclient-4.0-beta2.jar"/>
+			<pathelement location="_apache_httpcore-4.0.jar"/>
+			<pathelement location="_apache_httpcore-nio-4.0.jar"/>
+
+			<pathelement location="_base_google-collect-1.0-rc2.jar"/>
+			<pathelement location="_base_icu4j.jar"/>
+			<pathelement location="_base_jcip-annotations.jar"/>
+			<pathelement location="_base_log4j.jar"/>
+			<pathelement location="_base_mime-util.jar"/>
+
+			<pathelement location="_browser_base64-2.2.2.jar"/>
+			<pathelement location="_browser_jna-3.1.0.jar"/>
+			<pathelement location="_browser_mozdom4java.jar"/>
+			<pathelement location="_browser_MozillaGlue-1.9.jar"/>
+			<pathelement location="_browser_MozillaInterfaces-1.9.jar"/>
+			<pathelement location="_browser_mozswing.jar"/>
+
+			<pathelement location="_daap_daap.jar"/>
+			<pathelement location="_daap_jmdns.jar"/>
+
+			<pathelement location="_desktop_jdic.jar"/>
+
+			<pathelement location="_facebook_activation-1.1.jar"/>
+			<pathelement location="_facebook_commons-lang-2.2.jar"/>
+			<pathelement location="_facebook_fb-java-api-2.1.1.jar"/>
+			<pathelement location="_facebook_fb-java-api-schema-2.1.1.jar"/>
+			<pathelement location="_facebook_jaxb-api-2.1.jar"/>
+			<pathelement location="_facebook_jaxb-impl-2.1.9.jar"/>
+			<pathelement location="_facebook_json-20070829.jar"/>
+			<pathelement location="_facebook_runtime-0.4.1.3.jar"/>
+			<pathelement location="_facebook_stax-api-1.0-2.jar"/>
+
+			<pathelement location="_guice_aopalliance.jar"/>
+			<pathelement location="_guice_guice-2.0-snapshot-20090610.jar"/>
+			<pathelement location="_guice_guice-assistedinject-snapshot20090512.jar"/>
+
+			<pathelement location="_jabber_smack.jar"/>
+			<pathelement location="_jabber_smackx.jar"/>
+			<pathelement location="_jabber_smackx-debug.jar"/>
+
+			<pathelement location="_net_clink.jar"/>
+			<pathelement location="_net_dnsjava-2.0.6.jar"/>
+			<pathelement location="_net_onion-common.jar"/>
+			<pathelement location="_net_onion-fec.jar"/>
+
+			<pathelement location="_play_jaudiotagger.jar"/>
+			<pathelement location="_play_jcraft.jar"/>
+			<pathelement location="_play_jflac.jar"/>
+			<pathelement location="_play_jl.jar"/>
+			<pathelement location="_play_jogg.jar"/>
+			<pathelement location="_play_jorbis.jar"/>
+			<pathelement location="_play_mp3spi.jar"/>
+			<pathelement location="_play_tritonus.jar"/>
+			<pathelement location="_play_vorbisspi.jar"/>
+
+			<pathelement location="_store_hsqldb-1.8.0.10.jar"/>
+
+			<pathelement location="_ui_AppFramework.jar"/>
+			<pathelement location="_ui_EventBus-1.2b.jar"/>
+			<pathelement location="_ui_glazedlists-snapshot20090628_java15.jar"/>
+			<pathelement location="_ui_jxlayer-4.0.jar"/>
+			<pathelement location="_ui_miglayout-3.7-swing.jar"/>
+			<pathelement location="_ui_swing-worker-1.2.jar"/>
+			<pathelement location="_ui_swingx-1.0.jar"/>
+
+			<pathelement location="_us_gettext-commons.jar"/>
+			<pathelement location="_us_messages.jar"/>
+
+		</path>
+		<pathconvert property="class.path.line" pathsep=" ">
+			<path refid="class.path.list"/>
+			<flattenmapper/>
+		</pathconvert>
+
+		<!--
+		Bundle resource files and class files together to make the main jar
+
+		jarfile          Where to make the jar file, this will overwrite a file already there
+		basedir          Find the files to put in the jar here
+		filesonly = yes  Store only file entries
+		compress = no    Don't compress the contents
+		-->
+		<jar
+			jarfile="work/gnutella.jar"
+			basedir="ant"
+			filesonly="yes"
+			compress="no">
+			<manifest>
+				<attribute name="Class-Path" value="${class.path.line}"/>
+			</manifest>
+		</jar>
+
+		<!-- Make empty jars with just a main class and classpath in the manifest, adding the main jar and the platform-specific jars -->
+		<jar jarfile="work/launch-linux.jar">
+			<manifest>
+				<attribute name="Main-Class" value="org.limewire.ui.swing.Main"/>
+				<attribute name="Class-Path" value="gnutella.jar _desktop-LINUX_jdic_stub.jar"/>
+			</manifest>
+		</jar>
+		<jar jarfile="work/launch-mac.jar">
+			<manifest>
+				<attribute name="Main-Class" value="org.limewire.ui.swing.Main"/>
+				<attribute name="Class-Path" value="gnutella.jar _desktop-MAC_MRJAdapter.jar"/>
+			</manifest>
+		</jar>
+		<jar jarfile="work/launch-win.jar">
+			<manifest>
+				<attribute name="Main-Class" value="org.limewire.ui.swing.Main"/>
+				<attribute name="Class-Path" value="gnutella.jar _desktop-WIN_jdic_stub.jar _itunes-WIN_iTunes-0.0.1.jar _itunes-WIN_jacob-1.14.3.jar"/> <!-- -->
+			</manifest>
+		</jar>
+
+	</target>
+</project>
