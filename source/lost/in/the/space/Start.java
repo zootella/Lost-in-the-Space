@@ -49,7 +49,8 @@ public final class Start {
 	
 	// Code taken from LimeWire's Main
 
-    public static void main(String[] args) {
+    public static void main() {
+    	String[] args = new String[] {}; // No command line arguments
         try {
             if (isMacOSX()) {
             	// Don't show the icon in the dock
