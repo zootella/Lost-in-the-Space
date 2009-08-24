@@ -2,6 +2,7 @@ package lost.in.the.space;
 
 import javax.swing.SwingUtilities;
 
+import org.jdesktop.application.Application;
 import org.zootella.cheat.process.Mistake;
 
 public class Main {
@@ -10,11 +11,9 @@ public class Main {
     
     public static void main(String[] args) {
     	
-    	/*
     	System.out.println("before");
     	Start.main();
     	System.out.println("after");
-    	*/
     	
     	
     	
@@ -32,6 +31,7 @@ public class Main {
 			}
 		});
     	
+		
     	
     }
 }

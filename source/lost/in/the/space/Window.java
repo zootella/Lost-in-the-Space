@@ -3,7 +3,6 @@ package lost.in.the.space;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Rectangle;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -12,6 +11,8 @@ import javax.swing.AbstractAction;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import org.limewire.ui.swing.event.ExitApplicationEvent;
+import org.limewire.ui.swing.mainframe.AppFrame;
 import org.zootella.cheat.process.Mistake;
 import org.zootella.cheat.state.Close;
 import org.zootella.cheat.user.CornerIcon;
@@ -99,8 +100,19 @@ public class Window extends Close {
 		if (already()) return;
 		
 		close(icon);
+		
 		frame.setVisible(false);
 		frame.dispose(); // Dispose the frame so the process can close
+		
+		System.out.println("before bridge service impl exit");
+		BridgeServiceImpl.exit();
+		System.out.println("after bridge service impl exit");
+
+		/*
+		ExitApplicationEvent x = new ExitApplicationEvent(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "Shutdown"));
+		AppFrame.handleExitApplication(x);
+		*/
+		
 	}
 	
 	

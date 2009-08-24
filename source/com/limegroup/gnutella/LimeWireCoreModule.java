@@ -5,6 +5,10 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 
+import lost.in.the.space.BridgeGlue;
+import lost.in.the.space.BridgeService;
+import lost.in.the.space.BridgeServiceImpl;
+
 import org.limewire.common.LimeWireCommonModule;
 import org.limewire.concurrent.AbstractLazySingletonProvider;
 import org.limewire.concurrent.ExecutorsHelper;
@@ -320,6 +324,7 @@ public class LimeWireCoreModule extends AbstractModule {
         bind(RareFileStrategy.class).to(RareFileStrategyImpl.class);
         bind(MulticastService.class).to(MulticastServiceImpl.class);
         bind(NetworkUpdateSanityChecker.class).to(NetworkUpdateSanityCheckerImpl.class);
+        bind(BridgeService.class).to(BridgeServiceImpl.class);
         
         bindAll(Names.named("fastExecutor"), ScheduledExecutorService.class, FastExecutorProvider.class, ExecutorService.class, Executor.class);
         bindAll(Names.named("unlimitedExecutor"), ListeningExecutorService.class, UnlimitedExecutorProvider.class, Executor.class, ExecutorService.class);
@@ -357,6 +362,7 @@ public class LimeWireCoreModule extends AbstractModule {
         bind(LimeCoreGlue.class);
         bind(QRPUpdater.class);
         bind(DaapManager.class);
+        bind(BridgeGlue.class);
         bind(FirewalledAddressSerializer.class).asEagerSingleton();
         bind(SameNATAddressResolver.class).asEagerSingleton();
         bind(ConnectableConnector.class).asEagerSingleton();
