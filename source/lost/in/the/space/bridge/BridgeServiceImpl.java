@@ -1,4 +1,5 @@
-package lost.in.the.space;
+package lost.in.the.space.bridge;
+
 
 import org.json.JSONObject;
 import org.limewire.ui.swing.util.SwingUtils;

@@ -1,4 +1,4 @@
-package lost.in.the.space;
+package lost.in.the.space.bridge;
 
 public interface BridgeService {
     void start();

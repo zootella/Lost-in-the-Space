@@ -1,4 +1,4 @@
-package lost.in.the.space;
+package lost.in.the.space.user;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -18,6 +18,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import lost.in.the.space.bridge.BridgeServiceImpl;
+import lost.in.the.space.program.Main;
+
 import org.limewire.ui.swing.event.ExitApplicationEvent;
 import org.limewire.ui.swing.mainframe.AppFrame;
 import org.zootella.cheat.exception.DiskException;
@@ -26,8 +29,9 @@ import org.zootella.cheat.state.Close;
 import org.zootella.cheat.user.CornerIcon;
 import org.zootella.cheat.user.Face;
 import org.zootella.cheat.user.Screen;
-import org.zootella.cheat.user.skin.ClearButton;
 import org.zootella.cheat.user.widget.BigTextField;
+import org.zootella.cheat.user.widget.ClearButton;
+import org.zootella.cheat.user.widget.PlaceButton;
 import org.zootella.cheat.user.widget.Grip;
 
 /** The main window on the screen. */
@@ -57,9 +61,9 @@ public class Window extends Close {
 		
 		ClearButton clear = new ClearButton(closeAction, new Rectangle(10, 155, 80, 25));
 		
-		Button close = new Button(closeAction,   new Rectangle(10, 35, 80, 25), Color.black);
-		Button exit = new Button(exitAction,     new Rectangle(10, 75, 80, 25), Color.black);
-		Button browse = new Button(browseAction, new Rectangle(10, 115, 80, 25), Color.black);
+		PlaceButton close = new PlaceButton(closeAction,   new Rectangle(10, 35, 80, 25), Color.black);
+		PlaceButton exit = new PlaceButton(exitAction,     new Rectangle(10, 75, 80, 25), Color.black);
+		PlaceButton browse = new PlaceButton(browseAction, new Rectangle(10, 115, 80, 25), Color.black);
 		
 		BigTextField field = new BigTextField(new Rectangle(10, 200, 200, 40), new Font("Helvetica,Arial", Font.PLAIN, 24));
 		
@@ -74,7 +78,7 @@ public class Window extends Close {
 		
 		
 		
-		Dimension d = new Dimension(595, 842);
+		Dimension d = new Dimension(400, 647);
 		
 		panel.setSize(d);
 		frame.setSize(d);
@@ -104,10 +108,12 @@ public class Window extends Close {
 	
 	private final BufferedImage image;
 	
+	//TODO move grip in here so the whole window minus child widgets does it
+	
 	
 	private class MyPanel extends JPanel {
 		@Override public void paintComponent(Graphics g) {
-			g.drawImage(image, 0, 0, null);
+//			g.drawImage(image, 0, 0, null);
 		}
 	}
 	

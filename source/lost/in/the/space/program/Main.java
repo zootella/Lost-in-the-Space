@@ -1,8 +1,10 @@
-package lost.in.the.space;
+package lost.in.the.space.program;
 
 import javax.swing.SwingUtilities;
 
-import org.jdesktop.application.Application;
+import lost.in.the.space.bridge.Start;
+import lost.in.the.space.user.Window;
+
 import org.zootella.cheat.process.Mistake;
 
 public class Main {
@@ -11,11 +13,9 @@ public class Main {
     
     public static void main(String[] args) {
     	
-    	/*
     	System.out.println("before");
     	Start.main();
     	System.out.println("after");
-    	*/
     	
     	
     	

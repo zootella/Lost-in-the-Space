@@ -1,4 +1,4 @@
-package lost.in.the.space;
+package lost.in.the.space.bridge;
 
 import java.lang.reflect.Method;
 import java.util.Locale;
