@@ -15,14 +15,12 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.AbstractAction;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import lost.in.the.space.bridge.BridgeServiceImpl;
 import lost.in.the.space.program.Main;
+import lost.in.the.space.program.Program;
+import lost.in.the.space.program.Snippet;
 
-import org.limewire.ui.swing.event.ExitApplicationEvent;
-import org.limewire.ui.swing.mainframe.AppFrame;
 import org.zootella.cheat.exception.DiskException;
 import org.zootella.cheat.process.Mistake;
 import org.zootella.cheat.state.Close;
@@ -31,8 +29,8 @@ import org.zootella.cheat.user.Face;
 import org.zootella.cheat.user.Screen;
 import org.zootella.cheat.user.widget.BigTextField;
 import org.zootella.cheat.user.widget.ClearButton;
-import org.zootella.cheat.user.widget.PlaceButton;
 import org.zootella.cheat.user.widget.Grip;
+import org.zootella.cheat.user.widget.PlaceButton;
 
 /** The main window on the screen. */
 public class Window extends Close {
@@ -40,7 +38,8 @@ public class Window extends Close {
 	// Object
 
 	/** Make the program's main window on the screen. */
-	public Window() {
+	public Window(Program program) {
+		this.program = program;
 		
 		Face.blend(); // Tell Java how to show the program's user interface
 
@@ -101,6 +100,8 @@ public class Window extends Close {
 
 		show(true);
 	}
+	
+	public final Program program;
 
 	public final JFrame frame;
 	public final JPanel panel;
@@ -137,16 +138,6 @@ public class Window extends Close {
 		
 		frame.setVisible(false);
 		frame.dispose(); // Dispose the frame so the process can close
-		
-		System.out.println("before bridge service impl exit");
-		BridgeServiceImpl.exit();
-		System.out.println("after bridge service impl exit");
-
-		/*
-		ExitApplicationEvent x = new ExitApplicationEvent(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "Shutdown"));
-		AppFrame.handleExitApplication(x);
-		*/
-		
 	}
 	
 	
@@ -165,14 +156,6 @@ public class Window extends Close {
 	
 
 	// Action
-	
-	
-	//ShowAction
-	//HideAction
-	//ExitAction
-	//BrowseAction
-	//
-
 
 	private final RestoreAction restoreAction;
 	private class RestoreAction extends AbstractAction {
@@ -205,7 +188,7 @@ public class Window extends Close {
 		public void actionPerformed(ActionEvent a) {
 			try {
 				
-				close(me());
+				close(program);
 
 			} catch (Exception e) { Mistake.stop(e); }
 		}
@@ -216,6 +199,8 @@ public class Window extends Close {
 		public BrowseAction() { super("Browse"); } // Text for the button
 		public void actionPerformed(ActionEvent a) {
 			try {
+				
+				Snippet.snippet();
 				
 
 			} catch (Exception e) { Mistake.stop(e); }

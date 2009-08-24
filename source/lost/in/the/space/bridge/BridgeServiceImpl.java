@@ -1,9 +1,8 @@
 package lost.in.the.space.bridge;
 
-
+import org.json.JSONException;
 import org.json.JSONObject;
-import org.limewire.ui.swing.util.SwingUtils;
-import org.zootella.cheat.state.Receive;
+import org.zootella.cheat.exception.DataException;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -11,77 +10,70 @@ import com.limegroup.gnutella.LifecycleManager;
 
 @Singleton public class BridgeServiceImpl implements BridgeService {
 	
-	private boolean running;
+	// Inject
 
 	@Inject public BridgeServiceImpl(LifecycleManager lifecycleManager) {
 		this.lifecycleManager = lifecycleManager;
+		loaded = true;
+		//TODO send an update to tell the window above that now we're ready
 	}
 	private static LifecycleManager lifecycleManager;
+	private static volatile boolean loaded;
+	
+	// Service
 	    
 	@Override public String getServiceName() {
 		return org.limewire.i18n.I18nMarker.marktr("Bridge Service");
 	}
-	    
 	@Override public void start() {
 		if (!running) {
-
-			SwingUtils.invokeLater(new Runnable() {
-	            @Override public void run() {
-					System.out.println("Started bridge.");
-	            }
-			});
 			running = true;
+			System.out.println("Started bridge.");
 		}
 	}
-	    
+	public void restart() {}
 	public void stop() {
 		running = false;
 	}
-	    
-	public void restart() {}
-	    
 	public Boolean isServerRunning() {
 		return running;
 	}
+	private boolean running;
+
+	// Command
 	
-	/** Send the other side a message. */
-	public void send(String s) {
-//        bridge.send(s);
+	public static boolean isReady() {
+		return loaded;
 	}
-	
-	private class MyReceive implements Receive {
-		public void receive() {
+
+	public static JSONObject command(JSONObject o) {
+		if (!loaded) throw new IllegalStateException();
+		try {
 			
-			// A message from the other side has arrived!
-			while (true) {
-				String s = null; //bridge.receive();
-				if (s == null) break;
+			if (o.has("quit")) {
 				
-				System.out.println("Received: " + s);
-				String response = invoke(s);
-//				bridge.send(response);
-				System.out.println("Sent: " + response);
+				System.out.println("before shutdown");
+				lifecycleManager.shutdown();
+				System.out.println("after shutdown");
+				return say("result", "ok");
+
+			} else {
+				return say("result", "unknown command");
 			}
+
+		} catch (Exception e) {
+			return say("result", e.toString());
 		}
 	}
 	
-	private String invoke(String requestString) {
+	
+	
+	public static JSONObject say(String name, String value) {
+		JSONObject r = new JSONObject();
 		try {
-			
-			JSONObject request = new JSONObject(requestString);
-			JSONObject response = new JSONObject(); //router.route(request);
-			String responseString = response.toString();
-			return responseString;
-
-		} catch (Exception e) { return e.toString(); }
-	}
-	
-	
-	
-	
-	
-	public static void exit() {
-		lifecycleManager.shutdown();
+			r.put(name, value);
+		} catch (JSONException e) { throw new DataException(e); }
+		return r;
 	}
 	
 	
