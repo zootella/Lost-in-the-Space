@@ -2,22 +2,32 @@ package lost.in.the.space;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.AbstractAction;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import org.limewire.ui.swing.event.ExitApplicationEvent;
 import org.limewire.ui.swing.mainframe.AppFrame;
+import org.zootella.cheat.exception.DiskException;
 import org.zootella.cheat.process.Mistake;
 import org.zootella.cheat.state.Close;
 import org.zootella.cheat.user.CornerIcon;
 import org.zootella.cheat.user.Face;
 import org.zootella.cheat.user.Screen;
+import org.zootella.cheat.user.skin.ClearButton;
+import org.zootella.cheat.user.widget.BigTextField;
 import org.zootella.cheat.user.widget.Grip;
 
 /** The main window on the screen. */
@@ -35,7 +45,7 @@ public class Window extends Close {
 		frame.setResizable(false);
 		frame.setLayout(null);
 		
-		panel = new JPanel();
+		panel = new MyPanel();
 		panel.setLayout(null);
 		
 		restoreAction = new RestoreAction();
@@ -45,20 +55,26 @@ public class Window extends Close {
 		
 		Grip grip = new Grip(frame, new Rectangle(0, 0, 300, 25));
 		
+		ClearButton clear = new ClearButton(closeAction, new Rectangle(10, 155, 80, 25));
+		
 		Button close = new Button(closeAction,   new Rectangle(10, 35, 80, 25), Color.black);
 		Button exit = new Button(exitAction,     new Rectangle(10, 75, 80, 25), Color.black);
 		Button browse = new Button(browseAction, new Rectangle(10, 115, 80, 25), Color.black);
+		
+		BigTextField field = new BigTextField(new Rectangle(10, 200, 200, 40), new Font("Helvetica,Arial", Font.PLAIN, 24));
 		
 		panel.add(grip.label);
 		panel.add(close.button);
 		panel.add(exit.button);
 		panel.add(browse.button);
+		panel.add(clear.label);
+		panel.add(field.field);
 		
 		final String iconPath = "lost/in/the/space/icon.gif";
 		
 		
 		
-		Dimension d = new Dimension(300, 600);
+		Dimension d = new Dimension(595, 842);
 		
 		panel.setSize(d);
 		frame.setSize(d);
@@ -75,7 +91,9 @@ public class Window extends Close {
 		icon = new CornerIcon(Main.name, Face.image(iconPath), restoreAction, exitAction);
 		
 		
-		
+		try {
+			image = ImageIO.read(new File("skin.png"));
+		} catch (IOException e) { throw new DiskException(e); }
 
 		show(true);
 	}
@@ -83,6 +101,16 @@ public class Window extends Close {
 	public final JFrame frame;
 	public final JPanel panel;
 	public final CornerIcon icon;
+	
+	private final BufferedImage image;
+	
+	
+	private class MyPanel extends JPanel {
+		@Override public void paintComponent(Graphics g) {
+			g.drawImage(image, 0, 0, null);
+		}
+	}
+	
 
 	// When the user clicks the main window's corner X, Java calls this windowClosing() method
 	private class MyWindowListener extends WindowAdapter {

@@ -66,6 +66,6 @@
 	<classpathentry kind="lib" path="work/_itunes-WIN_iTunes-0.0.1.jar"/>
 	<classpathentry kind="lib" path="work/_itunes-WIN_jacob-1.14.3.jar"/>
 	<classpathentry kind="lib" path="work/_desktop-WIN_jdic_stub.jar"/>
-	<classpathentry kind="lib" path="work/cheat.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/cheat"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
