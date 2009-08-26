@@ -24,7 +24,7 @@ public class Program extends Close {
 			BridgeServiceImpl.command(BridgeServiceImpl.say("quit", ""));
 		}
 		
-		System.out.println("Next line will kill the process");
+		System.out.println("system exit");
 		System.exit(0);
 	}
 }
