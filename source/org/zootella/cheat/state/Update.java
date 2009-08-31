@@ -4,7 +4,6 @@ import javax.swing.SwingUtilities;
 
 import org.zootella.cheat.process.Mistake;
 
-
 public class Update {
 	
 	// Make
@@ -33,7 +32,7 @@ public class Update {
 	}
 	
 	/** true when we've set Java to call run(), and it hasn't yet. */
-	private boolean set;
+	private volatile boolean set;
 
 	// Soon after send() above calls SwingUtilities.invokeLater(), Java calls this run() method
 	private class MyRunnable implements Runnable {

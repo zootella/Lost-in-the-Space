@@ -3,13 +3,16 @@ package lost.in.the.space.bridge;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.zootella.cheat.process.Mistake;
-import org.zootella.cheat.state.Receive;
+import org.zootella.cheat.state.Update;
 
 public class Ford {
 	
-	//get access to it
+	// Access
+	
+	/** Access the program's single Ford object that lets the ui and core pass messages. */
 	public synchronized static Ford instance() {
 		if (ford == null)
 			ford = new Ford();
@@ -17,53 +20,64 @@ public class Ford {
 	}
 	private static Ford ford;
 
-	//make
 	private Ford() {
 		down = new ArrayList<JSONObject>();
 		up = new ArrayList<JSONObject>();
-		receive = new ArrayList<Receive>();
 	}
 	private final List<JSONObject> down;
 	private final List<JSONObject> up;
-	private final List<Receive> receive;
+	private Update updateDown;
+	private Update updateUp;
 
-	//send a message down or up
+	// Send
+	
+	/** Send a message down to the core. */
 	public synchronized void sendDown(JSONObject o) {
 		down.add(o);
-		arrived();
+		if (updateDown != null)
+			updateDown.send();
 	}
+	/** Send a message up to the ui. */
 	public synchronized void sendUp(JSONObject o) {
 		up.add(o);
-		arrived();
+		if (updateUp != null)
+			updateUp.send();
 	}
 
-	//get a message that went down or up
+	// Receive
+	
+	/** Find out when the ui sends a message down to the core. */
+	public synchronized void updateDown(Update update) {
+		updateDown = update;
+	}
+	/** Find out when the core sends a message up to the ui. */
+	public synchronized void updateUp(Update update) {
+		updateUp = update;
+	}
+
+	/** The next message that went down, or null if no more. */
 	public synchronized JSONObject receiveDown() {
 		if (down.isEmpty()) return null;
 		return down.remove(0);
 	}
+	/** The next message that went up, or null if no more. */
 	public synchronized JSONObject receiveUp() {
 		if (up.isEmpty()) return null;
 		return up.remove(0);
 	}
-	
-	//sign up so you get called when new messages arrive
-	public synchronized void subscribe(Receive r) {
-		receive.add(r);
-	}
-	private void arrived() {
-		try {
-			for (Receive r : receive) {
-				r.receive();
-			}
-		} catch (Exception e) { Mistake.stop(e); }
-	}
-	
-	
-	
-	
-	
-	
-	
 
+	// Tools
+	
+	/** Say key in a JSONObject. */
+	public static JSONObject say(String key) {
+		return say(key, "-");
+	}
+	/** Say key and value in a JSONObject. */
+	public static JSONObject say(String key, String value) {
+		JSONObject o = new JSONObject();
+		try {
+			o.put(key, value);
+		} catch (JSONException e) { Mistake.stop(e); }
+		return o;
+	}
 }

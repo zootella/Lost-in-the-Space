@@ -1,8 +1,8 @@
 package lost.in.the.space.bridge;
 
-import org.json.JSONException;
 import org.json.JSONObject;
-import org.zootella.cheat.exception.DataException;
+import org.zootella.cheat.state.Receive;
+import org.zootella.cheat.state.Update;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -13,18 +13,21 @@ import com.limegroup.gnutella.LifecycleManager;
 	// Inject
 
 	@Inject public BridgeServiceImpl(LifecycleManager lifecycleManager) {
+		// Save references to injected parts of LimeWire
 		this.lifecycleManager = lifecycleManager;
-		loaded = true;
-		
+
+		// Connect to the Ford that lets us talk to the window above
+		update = new Update(new MyReceive());
+		update.send();
 		ford = Ford.instance();
-		//TODO what thread is this? you probably need to synchronize ford
-		//TODO send an update to tell the window above that now we're ready
+		ford.updateDown(update);
 	}
-	private static LifecycleManager lifecycleManager;
-	private static volatile boolean loaded;
 	
+	private final LifecycleManager lifecycleManager;
+	
+	private final Update update;
 	private final Ford ford;
-	
+
 	// Service
 	    
 	@Override public String getServiceName() {
@@ -34,6 +37,8 @@ import com.limegroup.gnutella.LifecycleManager;
 		if (!running) {
 			running = true;
 			System.out.println("Started bridge.");
+			ford.sendUp(Ford.say("loaded"));
+			update.send();
 		}
 	}
 	public void restart() {}
@@ -46,13 +51,24 @@ import com.limegroup.gnutella.LifecycleManager;
 	private boolean running;
 
 	// Command
-	
-	public static boolean isReady() {
-		return loaded;
-	}
 
-	public static JSONObject command(JSONObject o) {
-		if (!loaded) throw new IllegalStateException();
+	private class MyReceive implements Receive {
+		@Override public void receive() throws Exception {
+			
+			if (!running) return;
+			
+			while (true) {
+				JSONObject o = ford.receiveDown();
+				if (o == null)
+					return;
+				JSONObject r = command(o);
+				if (r != null)
+					ford.sendUp(r);
+			}
+		}
+	}
+	
+	public JSONObject command(JSONObject o) {
 		try {
 			
 			if (o.has("quit")) {
@@ -60,26 +76,19 @@ import com.limegroup.gnutella.LifecycleManager;
 				System.out.println("before shutdown");
 				lifecycleManager.shutdown();
 				System.out.println("after shutdown");
-				return say("result", "ok");
+				return Ford.say("quitted");
 
 			} else {
-				return say("result", "unknown command");
+				return Ford.say("result", "unknown command");
 			}
 
 		} catch (Exception e) {
-			return say("result", e.toString());
+			return Ford.say("result", e.toString());
 		}
 	}
 	
 	
 	
-	public static JSONObject say(String name, String value) {
-		JSONObject r = new JSONObject();
-		try {
-			r.put(name, value);
-		} catch (JSONException e) { throw new DataException(e); }
-		return r;
-	}
 	
 	
 	
