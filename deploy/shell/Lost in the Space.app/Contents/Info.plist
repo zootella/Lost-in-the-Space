@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+
+	<key>CFBundleExecutable</key>
+	<string>JavaApplicationStub</string>
+
+	<key>CFBundleIconFile</key>
+	<string>icon.icns</string>
+
+	<key>CFBundleIdentifier</key>
+	<string>org.lostinthespace.LostInTheSpace</string>
+
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+
+	<key>CFBundleName</key>
+	<string>Lost in the Space</string>
+
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+
+	<key>CFBundleShortVersionString</key>
+	<string>1.0.0</string>
+
+	<key>CFBundleSignature</key>
+	<string>LITS</string>
+
+	<key>CFBundleVersion</key>
+	<string>Lost in the Space 1.0</string>
+
+	<key>Java</key>
+	<dict>
+		<key>ClassPath</key>
+		<string>$JAVAROOT/launch-mac.jar:/System/Library/Java</string>
+
+		<key>MainClass</key>
+		<string>org.limewire.ui.swing.Main</string>
+
+		<key>JVMVersion</key>
+		<string>1.6</string>
+
+		<key>Properties</key>
+		<dict>
+			<key>apple.laf.useScreenMenuBar</key>
+			<string>true</string>
+
+			<key>java.net.preferIPv4Stack</key>
+			<string>true</string>
+
+			<key>org.apache.commons.logging.Log</key>
+			<string>org.apache.commons.logging.impl.NoOpLog</string>
+
+			<key>java.endorsed.dirs</key>
+			<string></string>
+
+			<key>java.library.path</key>
+			<string>$APP_PACKAGE/Contents/Resources/Java</string>
+		</dict>
+
+		<key>VMOptions</key>
+		<array>
+			<string>-ea:com.limegroup...</string>
+			<string>-ea:org.limewire...</string>
+			<string>-Xmx256M</string>
+		</array>
+
+		<key>WorkingDirectory</key>
+		<string>$APP_PACKAGE/Contents/Resources/Java</string>
+	</dict>
+</dict>
+</plist>

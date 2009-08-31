@@ -10,7 +10,7 @@ Where to set the working directory.
 Relative to where the exe is running, not where this launch.txt file is.
 A blank line makes the working directory the running exe's folder.
 ==Working==
-
+Lost in the Space.app\\Contents\\Resources\\Java
 
 The package name of the Main class.
 Separate parts with forward slashes, not periods.

@@ -22,6 +22,9 @@ import lost.in.the.space.program.Main;
 import lost.in.the.space.program.Program;
 import lost.in.the.space.program.Snippet;
 
+import net.roydesign.mac.MRJAdapter;
+
+import org.zootella.cheat.desktop.Desktop;
 import org.zootella.cheat.exception.DiskException;
 import org.zootella.cheat.process.Mistake;
 import org.zootella.cheat.state.Close;
@@ -34,6 +37,10 @@ import org.zootella.cheat.user.widget.ClearLabel;
 import org.zootella.cheat.user.widget.Grippy;
 import org.zootella.cheat.user.widget.PlaceButton;
 import org.zootella.cheat.user.widget.WhiteLabel;
+
+
+
+import java.awt.event.ActionListener;
 
 /** The main window on the screen. */
 public class Window extends Close {
@@ -58,48 +65,39 @@ public class Window extends Close {
 		chooseAction = new ChooseAction();
 		openAction = new OpenAction();
 		
-		/*
-		status = new ClearLabel(new Rectangle(10, 300, 200, 14));
+		String exitDesktop;
+		if (Desktop.hasDock())
+			exitDesktop = "Quit";
+		else
+			exitDesktop = "Exit";
 		
-		status.label.setText("hello");
+		exit = new ClearButton(exitAction, Guide.font, Guide.exit, null, exitDesktop);
+		close = new ClearButton(closeAction, Guide.font, Guide.close, null, "Close");
+		choose = new ClearButton(chooseAction, Guide.font, Guide.choose, "Shared", "Choose Folder");
+		open = new ClearButton(openAction, Guide.font, Guide.open, null, "Open Folder");
 		
+		nameLabel = new ClearLabel(Guide.font, Guide.nameLabel, "Keyword");
+		extLabel = new ClearLabel(Guide.font, Guide.extLabel, "Ext");
 		
+		name = new BigTextField(Guide.bigFont, Guide.name);
+		ext = new BigTextField(Guide.bigFont, Guide.ext);
 		
-		
-		ClearButton clear = new ClearButton(closeAction, new Rectangle(10, 155, 80, 25));
-		
-		PlaceButton close = new PlaceButton(closeAction,   new Rectangle(10, 35, 80, 25), Color.black);
-		PlaceButton exit = new PlaceButton(exitAction,     new Rectangle(10, 75, 80, 25), Color.black);
-		PlaceButton browse = new PlaceButton(browseAction, new Rectangle(10, 115, 80, 25), Color.black);
-		
-		BigTextField field = new BigTextField(new Rectangle(10, 200, 200, 40), new Font("Helvetica,Arial", Font.PLAIN, 24));
-		
-		panel.add(status.label);
-		panel.add(close.button);
-		panel.add(exit.button);
-		panel.add(browse.button);
-		panel.add(clear.label);
-		panel.add(field.field);
-		*/
-		
-		
-		
-		
-		exit = new ClearButton(exitAction, Guide.exit, null, "Exit");
-		close = new ClearButton(closeAction, Guide.close, null, "Close");
-		choose = new ClearButton(chooseAction, Guide.choose, "Shared", "Choose Folder");
-		open = new ClearButton(openAction, Guide.open, null, null);
-		name = new BigTextField(Guide.name, Guide.big);
-		ext = new BigTextField(Guide.ext, Guide.big);
-		status = new ClearLabel(Guide.status);
+		status = new ClearLabel(Guide.font, Guide.status, null);
 		
 		panel.add(exit.label);
 		panel.add(close.label);
 		panel.add(choose.label);
 		panel.add(open.label);
+		panel.add(nameLabel.label);
+		panel.add(extLabel.label);
 		panel.add(name.field);
 		panel.add(ext.field);
 		panel.add(status.label);
+		
+		
+		status.label.setText("This is the status");
+		open.label.setText("This is the path");
+		
 		
 		
 		
@@ -120,10 +118,14 @@ public class Window extends Close {
 		frame.setBounds(Screen.positionSize(frame.getSize().width, frame.getSize().height));
 		frame.setContentPane(panel);
 		
+		MRJAdapter.addQuitApplicationListener(new MyQuitActionListener());
+		MRJAdapter.addReopenApplicationListener(new MyReopenActionListener());
 		
 		
-		
-		icon = new CornerIcon(Main.name, Face.image(Guide.icon), restoreAction, exitAction);
+		if (Desktop.hasTray())
+			icon = new CornerIcon(Main.name, Face.image(Guide.icon), restoreAction, exitAction);
+		else
+			icon = null;
 		
 		new Grippy(frame, panel);
 		
@@ -132,6 +134,19 @@ public class Window extends Close {
 		} catch (IOException e) { throw new DiskException(e); }
 
 		show(true);
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 	}
 	
 	public final Program program;
@@ -145,29 +160,44 @@ public class Window extends Close {
 	private final ClearButton close;
 	private final ClearButton choose;
 	private final ClearButton open;
+	private final ClearLabel nameLabel;
+	private final ClearLabel extLabel;
 	private final BigTextField name;
 	private final BigTextField ext;
 	private final ClearLabel status;
-	
-	
-	
+
 	private class MyPanel extends JPanel {
 		@Override public void paintComponent(Graphics g) {
 			g.drawImage(image, 0, 0, null);
 		}
 	}
-	
 
 	// When the user clicks the main window's corner X, Java calls this windowClosing() method
 	private class MyWindowListener extends WindowAdapter {
 		public void windowClosing(WindowEvent w) {
 			try {
-
 				close(me());
-				
 			} catch (Exception e) { Mistake.stop(e); }
 		}
 	}
+	
+	// Runs when the Mac user clicks the Quit menu item from the top left or from the dock
+	private class MyQuitActionListener implements ActionListener {
+		@Override public void actionPerformed(ActionEvent a) {
+			try {
+				close(me());
+			} catch (Exception e) { Mistake.stop(e); }
+		}
+	}
+	
+	private class MyReopenActionListener implements ActionListener {
+		@Override public void actionPerformed(ActionEvent a) {
+			try {
+				show(true);
+			} catch (Exception e) { Mistake.stop(e); }
+		}
+	}
+	
 	private Window me() { return this; }
 
 	@Override public void close() {
@@ -188,7 +218,8 @@ public class Window extends Close {
 		show = b;
 
 		frame.setVisible(show);
-		icon.show(!show);
+		if (icon != null)
+			icon.show(!show);
 	}
 	private boolean show;
 	

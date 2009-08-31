@@ -2,8 +2,6 @@ package lost.in.the.space.program;
 
 import javax.swing.SwingUtilities;
 
-import lost.in.the.space.bridge.Start;
-
 import org.zootella.cheat.process.Mistake;
 
 public class Main {
@@ -23,7 +21,9 @@ public class Main {
 			}
 		});
 
+		/*
 		// Make and start LimeWire's Gnutella core underneath
 		Start.main();
+		*/
     }
 }
