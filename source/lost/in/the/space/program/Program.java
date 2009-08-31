@@ -28,41 +28,34 @@ public class Program extends Close {
 
 	@Override public void close() {
 		if (already()) return;
-		
 		close(window);
 		Mistake.closeCheck();
-		
 		ford.sendDown(Ford.say("quit"));
 	}
-	
-	
-	
-	
+
 	// Command
 
+	// Java calls this when a new message was sent up for us
 	private class MyReceive implements Receive {
 		@Override public void receive() throws Exception {
 			
+			// Loop for each message that has arrived from the core below
 			while (true) {
-				JSONObject o = ford.receiveUp();
-				if (o == null)
-					return;
-				response(o);
+				JSONObject r = ford.receiveUp();
+				if (r == null)
+					return; // No more messages right now
+				
+				// Do the message
+				message(r);
 			}
 		}
 	}
 	
-	public void response(JSONObject o) {
+	/** Look at r from the core below. */
+	public void message(JSONObject r) {
 			
-		if (o.has("quitted")) {
-			System.out.println("system exit");
+		if (r.has("quitted")) {
 			System.exit(0);
 		}
 	}
-	
-	
-	
-	
-	
-	
 }

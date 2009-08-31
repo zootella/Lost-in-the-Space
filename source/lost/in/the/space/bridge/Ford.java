@@ -33,12 +33,14 @@ public class Ford {
 	
 	/** Send a message down to the core. */
 	public synchronized void sendDown(JSONObject o) {
+		System.out.println("USER> " + o.toString());
 		down.add(o);
 		if (updateDown != null)
 			updateDown.send();
 	}
 	/** Send a message up to the ui. */
 	public synchronized void sendUp(JSONObject o) {
+		System.out.println("    " + o.toString() + " <CORE");
 		up.add(o);
 		if (updateUp != null)
 			updateUp.send();

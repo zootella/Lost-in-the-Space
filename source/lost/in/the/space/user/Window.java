@@ -34,7 +34,7 @@ import org.zootella.cheat.user.Screen;
 import org.zootella.cheat.user.widget.BigTextField;
 import org.zootella.cheat.user.widget.ClearButton;
 import org.zootella.cheat.user.widget.ClearLabel;
-import org.zootella.cheat.user.widget.Grippy;
+import org.zootella.cheat.user.widget.Grip;
 import org.zootella.cheat.user.widget.PlaceButton;
 import org.zootella.cheat.user.widget.WhiteLabel;
 
@@ -127,7 +127,7 @@ public class Window extends Close {
 		else
 			icon = null;
 		
-		new Grippy(frame, panel);
+		new Grip(frame, panel);
 		
 		try {
 			image = ImageIO.read(new File(Guide.skin));
