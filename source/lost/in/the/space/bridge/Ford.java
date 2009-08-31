@@ -10,7 +10,7 @@ import org.zootella.cheat.state.Receive;
 public class Ford {
 	
 	//get access to it
-	public static Ford instance() {
+	public synchronized static Ford instance() {
 		if (ford == null)
 			ford = new Ford();
 		return ford;
@@ -18,7 +18,7 @@ public class Ford {
 	private static Ford ford;
 
 	//make
-	public Ford() {
+	private Ford() {
 		down = new ArrayList<JSONObject>();
 		up = new ArrayList<JSONObject>();
 		receive = new ArrayList<Receive>();
@@ -28,27 +28,27 @@ public class Ford {
 	private final List<Receive> receive;
 
 	//send a message down or up
-	public void sendDown(JSONObject o) {
+	public synchronized void sendDown(JSONObject o) {
 		down.add(o);
 		arrived();
 	}
-	public void sendUp(JSONObject o) {
+	public synchronized void sendUp(JSONObject o) {
 		up.add(o);
 		arrived();
 	}
 
 	//get a message that went down or up
-	public JSONObject receiveDown() {
+	public synchronized JSONObject receiveDown() {
 		if (down.isEmpty()) return null;
 		return down.remove(0);
 	}
-	public JSONObject receiveUp() {
+	public synchronized JSONObject receiveUp() {
 		if (up.isEmpty()) return null;
 		return up.remove(0);
 	}
 	
 	//sign up so you get called when new messages arrive
-	public void subscribe(Receive r) {
+	public synchronized void subscribe(Receive r) {
 		receive.add(r);
 	}
 	private void arrived() {

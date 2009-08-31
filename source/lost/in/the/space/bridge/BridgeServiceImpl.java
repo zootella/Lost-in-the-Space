@@ -15,10 +15,15 @@ import com.limegroup.gnutella.LifecycleManager;
 	@Inject public BridgeServiceImpl(LifecycleManager lifecycleManager) {
 		this.lifecycleManager = lifecycleManager;
 		loaded = true;
+		
+		ford = Ford.instance();
+		//TODO what thread is this? you probably need to synchronize ford
 		//TODO send an update to tell the window above that now we're ready
 	}
 	private static LifecycleManager lifecycleManager;
 	private static volatile boolean loaded;
+	
+	private final Ford ford;
 	
 	// Service
 	    
