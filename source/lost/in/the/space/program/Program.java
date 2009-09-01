@@ -12,6 +12,7 @@ import org.zootella.cheat.state.Update;
 public class Program extends Close {
 	
 	public Program() {
+		this.core = new Core(this);
 		this.window = new Window(this);
 
 		// Connect to the Ford that lets us talk to the window above
@@ -22,13 +23,15 @@ public class Program extends Close {
 	}
 	
 	public final Window window;
+	public final Core core;
+	public final Ford ford;
 	
 	private final Update update;
-	private final Ford ford;
 
 	@Override public void close() {
 		if (already()) return;
 		close(window);
+		close(core);
 		Mistake.closeCheck();
 		ford.sendDown(Ford.say("quit"));
 	}
@@ -53,8 +56,10 @@ public class Program extends Close {
 	
 	/** Look at r from the core below. */
 	public void message(JSONObject r) {
-			
-		if (r.has("quitted")) {
+		
+		if (r.has("loaded")) {
+			core.loaded();
+		} else if (r.has("quitted")) {
 			System.exit(0);
 		}
 	}

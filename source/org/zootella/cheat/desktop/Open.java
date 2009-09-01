@@ -1,12 +1,10 @@
 package org.zootella.cheat.desktop;
 
 import java.awt.Desktop;
-import java.io.IOException;
 import java.net.URI;
 
 import org.zootella.cheat.file.Path;
 import org.zootella.cheat.process.Mistake;
-
 
 public class Open {
 
@@ -16,13 +14,13 @@ public class Open {
 	public static void file(Path path) {
 		try {
 			Desktop.getDesktop().open(path.file);
-		} catch (IOException e) { Mistake.log(e); } // Don't do anything if it doesn't work
+		} catch (Exception e) { Mistake.log(e); } // Don't do anything if it doesn't work
 	}
 
 	/** Open the given Web address in the user's default Web browser. */
 	public static void url(URI url) {
 		try {
 			Desktop.getDesktop().browse(url);
-		} catch (IOException e) { Mistake.log(e); } // Don't do anything if it doesn't work
+		} catch (Exception e) { Mistake.log(e); } // Don't do anything if it doesn't work
 	}
 }

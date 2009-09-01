@@ -14,12 +14,16 @@ public abstract class Model extends Close {
 
 	/** Setup the core of this new object that extends Model. */
 	public Model() {
-		delay = new Delay(new MyReceive());
+		Receive receive = new MyReceive();
+		delay = new Delay(receive);
+		update = new Update(receive);
 		views = new HashSet<View>();
 	}
 	
 	/** Our Delay that keeps us from updating the screen so frequently the whole program would slow down. */
 	private final Delay delay;
+	/** Our Update acts right away. */
+	private final Update update;
 	/** Our list of View objects above viewing us. */
 	private final Set<View> views;
 	
@@ -42,7 +46,9 @@ public abstract class Model extends Close {
 	
 	// Send and receive
 
-	/** The object this Model is a part of has changed, have Model tell all the views above to update. */
+	/** The object this Model is a part of has changed, have Model tell all the views above to update right away. */
+	public void changedNow() { update.send(); } // Right now
+	/** The object this Model is a part of has changed, have Model tell all the views above to update soon. */
 	public void changed() { delay.send(); } // After the delay
 	private class MyReceive implements Receive {
 		public void receive() {

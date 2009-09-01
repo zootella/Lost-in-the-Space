@@ -24,8 +24,8 @@ public class Guide {
 	// Math
 	
 	private static int margin(int i) { return i * margin.width; }
-	private static int openWidth() { return window.width - margin(3) - chooseWidth; }
-	private static int nameWidth() { return window.width - margin(3) - extWidth; }
+	private static int shareWidth() { return window.width - margin(3) - chooseWidth; }
+	private static int keywordWidth() { return window.width - margin(3) - extWidth; }
 	
 	private static int a = top;
 	private static int b = a + line + margin.height;
@@ -38,13 +38,13 @@ public class Guide {
 	public static final Rectangle close = new Rectangle(352, 0, 44, 19);
 	
 	public static final Rectangle choose = new Rectangle(margin(1), a, chooseWidth, line);
-	public static final Rectangle open = new Rectangle(margin(2) + chooseWidth, a, openWidth(), line);
+	public static final Rectangle share = new Rectangle(margin(2) + chooseWidth, a, shareWidth(), line);
 
-	public static final Rectangle nameLabel = new Rectangle(margin(1), b, nameWidth(), line);
-	public static final Rectangle extLabel = new Rectangle(margin(2) + nameWidth(), b, extWidth, line);
+	public static final Rectangle keywordLabel = new Rectangle(margin(1), b, keywordWidth(), line);
+	public static final Rectangle extLabel = new Rectangle(margin(2) + keywordWidth(), b, extWidth, line);
 
-	public static final Rectangle name = new Rectangle(margin(1), c, nameWidth(), big);
-	public static final Rectangle ext = new Rectangle(margin(2) + nameWidth(), c, extWidth, big);
+	public static final Rectangle keyword = new Rectangle(margin(1), c, keywordWidth(), big);
+	public static final Rectangle ext = new Rectangle(margin(2) + keywordWidth(), c, extWidth, big);
 	
 	public static final Rectangle status = new Rectangle(margin(1), d, window.width - margin(2), line);
 

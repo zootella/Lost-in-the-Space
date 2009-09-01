@@ -49,7 +49,7 @@ class ResumeDownloaderImpl extends ManagedDownloaderImpl implements ResumeDownlo
      * constructor immediately starts a download thread.
      * @param incompleteFile the incomplete file to resume to, which
      *  MUST be the result of IncompleteFileManager.getFile.
-     * @param name the name of the completed file, which MUST be the result of
+     * @param keyword the name of the completed file, which MUST be the result of
      *  IncompleteFileManager.getCompletedName(incompleteFile)
      * @param size the size of the completed file, which MUST be the result of
      *  IncompleteFileManager.getCompletedSize(incompleteFile) */
