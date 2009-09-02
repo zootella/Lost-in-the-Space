@@ -24,7 +24,7 @@ public class Core extends Close {
 		model = new MyModel();
 		model.changedNow();
 		
-		share((new Path(SystemUtils.getSpecialPath(SpecialLocations.DOCUMENTS))).add("Shared").toString());
+		share((new Path(SystemUtils.getSpecialPath(SpecialLocations.DOCUMENTS))).add("Share").toString());
 	}
 	public final Program program;
 	private final Update update;

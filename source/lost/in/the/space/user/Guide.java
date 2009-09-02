@@ -13,7 +13,7 @@ public class Guide {
 	public static final Dimension margin = new Dimension(10, 14);
 	
 	public static final int top = 290;
-	public static final int chooseWidth = 40;
+	public static final int chooseWidth = 35;
 	public static final int extWidth = 100;
 	
 	/** The small font ends up this many pixels high on the screen in both Windows and Mac. */
@@ -24,7 +24,7 @@ public class Guide {
 	// Math
 	
 	private static int margin(int i) { return i * margin.width; }
-	private static int shareWidth() { return window.width - margin(3) - chooseWidth; }
+	private static int openWidth() { return window.width - margin(3) - chooseWidth; }
 	private static int keywordWidth() { return window.width - margin(3) - extWidth; }
 	
 	private static int a = top;
@@ -38,7 +38,7 @@ public class Guide {
 	public static final Rectangle close = new Rectangle(352, 0, 44, 19);
 	
 	public static final Rectangle choose = new Rectangle(margin(1), a, chooseWidth, line);
-	public static final Rectangle share = new Rectangle(margin(2) + chooseWidth, a, shareWidth(), line);
+	public static final Rectangle open = new Rectangle(margin(2) + chooseWidth, a, openWidth(), line);
 
 	public static final Rectangle keywordLabel = new Rectangle(margin(1), b, keywordWidth(), line);
 	public static final Rectangle extLabel = new Rectangle(margin(2) + keywordWidth(), b, extWidth, line);
@@ -63,5 +63,5 @@ public class Guide {
 	// Font
 	
 	public static final Font font = new Font("Tahoma", Font.PLAIN, 11);
-	public static final Font bigFont = new Font("Arial", Font.PLAIN, 24);
+	public static final Font bigFont = new Font("Arial", Font.PLAIN, 24); // Loads Helvetica on Mac, which is good
 }

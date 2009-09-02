@@ -24,9 +24,7 @@ import net.roydesign.mac.MRJAdapter;
 
 import org.zootella.cheat.desktop.Desktop;
 import org.zootella.cheat.desktop.Open;
-import org.zootella.cheat.exception.DataException;
 import org.zootella.cheat.exception.DiskException;
-import org.zootella.cheat.file.Path;
 import org.zootella.cheat.process.Mistake;
 import org.zootella.cheat.state.Close;
 import org.zootella.cheat.state.View;
@@ -58,7 +56,7 @@ public class Window extends Close {
 		exitAction = new ExitAction();
 		closeAction = new CloseAction();
 		chooseAction = new ChooseAction();
-		shareAction = new ShareAction();
+		openAction = new OpenAction();
 		
 		String say;
 		if (Desktop.hasDock())
@@ -68,8 +66,8 @@ public class Window extends Close {
 		
 		exit = new ClearButton(exitAction, Guide.font, Guide.exit, null, say);
 		close = new ClearButton(closeAction, Guide.font, Guide.close, null, "Close");
-		choose = new ClearButton(chooseAction, Guide.font, Guide.choose, "Shared", "Choose Folder");
-		share = new ClearButton(shareAction, Guide.font, Guide.share, null, "Open Folder");
+		choose = new ClearButton(chooseAction, Guide.font, Guide.choose, "Folder", "Choose Folder");
+		open = new ClearButton(openAction, Guide.font, Guide.open, null, "Open Folder");
 		keywordLabel = new ClearLabel(Guide.font, Guide.keywordLabel, "Keyword");
 		extLabel = new ClearLabel(Guide.font, Guide.extLabel, "Ext");
 		keywordField = new TextField(Guide.bigFont, Guide.keyword);
@@ -82,7 +80,7 @@ public class Window extends Close {
 		panel.add(exit.label);
 		panel.add(close.label);
 		panel.add(choose.label);
-		panel.add(share.label);
+		panel.add(open.label);
 		panel.add(keywordLabel.label);
 		panel.add(extLabel.label);
 		panel.add(keywordField.field);
@@ -130,7 +128,7 @@ public class Window extends Close {
 	private final ClearButton exit;
 	private final ClearButton close;
 	private final ClearButton choose;
-	private final ClearButton share;
+	private final ClearButton open;
 	private final ClearLabel keywordLabel;
 	private final ClearLabel extLabel;
 	private final TextField keywordField;
@@ -262,9 +260,9 @@ public class Window extends Close {
 	
 
 	/** Open the shared folder. */
-	private final ShareAction shareAction;
-	private class ShareAction extends AbstractAction {
-		public ShareAction() { super("Share"); }
+	private final OpenAction openAction;
+	private class OpenAction extends AbstractAction {
+		public OpenAction() { super("Open"); }
 		public void actionPerformed(ActionEvent a) {
 			try {
 				Open.file(program.core.share());
@@ -281,7 +279,7 @@ public class Window extends Close {
 		// The Model beneath changed, we need to update what we show the user
 		public void refresh() {
 			Refresh.text(status.label, program.core.model.status());
-			Refresh.text(share.label, program.core.model.share());
+			Refresh.text(open.label, program.core.model.share());
 		}
 
 		// The Model beneath closed, take this View off the screen
