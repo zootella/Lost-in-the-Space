@@ -12,7 +12,8 @@ import org.zootella.cheat.state.Update;
 
 public class Share extends Close {
 	
-	public Share(Path folder) {
+	public Share(Program program, Path folder) {
+		this.program = program;
 		this.folder = folder;
 		
 		System.out.println("Share " + folder.toString());
@@ -20,6 +21,7 @@ public class Share extends Close {
 		update = new Update(new MyReceive());
 		update.send();
 	}
+	private final Program program;
 	
 	private final Path folder;
 	private final Update update;
@@ -47,7 +49,13 @@ public class Share extends Close {
 				
 				if (list != null) {
 					
-					System.out.println("got the list");
+					for (Name name : list) {
+						Path p = folder.add(name);
+						System.out.println("want to share " + p.toString());
+						
+						
+					}
+					
 				}
 				
 				

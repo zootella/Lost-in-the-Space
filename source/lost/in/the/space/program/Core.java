@@ -60,7 +60,7 @@ public class Core extends Close {
 			if (shareAgo == null)
 				shareAgo = new Ago(shareTime);
 			if (no(share) && shareAgo.enough())
-				share = new Share(folder);
+				share = new Share(program, folder);
 			
 			
 			
