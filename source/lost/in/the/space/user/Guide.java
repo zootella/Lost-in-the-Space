@@ -12,7 +12,7 @@ public class Guide {
 	public static final Dimension window = new Dimension(400, 647);
 	public static final Dimension margin = new Dimension(10, 14);
 	
-	public static final int top = 247;
+	public static final int top = 290;
 	public static final int chooseWidth = 40;
 	public static final int extWidth = 100;
 	
