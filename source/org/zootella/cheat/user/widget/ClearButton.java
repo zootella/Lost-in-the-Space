@@ -1,6 +1,5 @@
 package org.zootella.cheat.user.widget;
 
-import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.Rectangle;
@@ -26,9 +25,9 @@ public class ClearButton {
 		label.setFont(font);
 
 		//actually not clear
+		/*
 		label.setBackground(new Color(0xffffff));
 		label.setOpaque(true);
-		/*
 		*/
 		
 		
