@@ -47,9 +47,9 @@ public abstract class Model extends Close {
 	// Send and receive
 
 	/** The object this Model is a part of has changed, have Model tell all the views above to update right away. */
-	public void changedNow() { update.send(); } // Right now
+	public void changed() { update.send(); } // Right now
 	/** The object this Model is a part of has changed, have Model tell all the views above to update soon. */
-	public void changed() { delay.send(); } // After the delay
+	public void progress() { delay.send(); } // After the delay
 	private class MyReceive implements Receive {
 		public void receive() {
 			if (closed()) return;
@@ -66,4 +66,13 @@ public abstract class Model extends Close {
 			pulse = new Pulse(new MyReceive());
 	}
 	private Pulse pulse;
+	
+	
+	
+	
+	//TODO is this also somewhere else?
+	public static String say(Object o) {
+		if (o == null) return "";
+		return o.toString();
+	}
 }
