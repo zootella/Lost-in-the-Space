@@ -123,7 +123,7 @@ import com.limegroup.gnutella.library.SharedFileCollection;
 
         SearchDetails details = new MySearchDetails(s);
         Search search = searchFactory.createSearch(details);
-        search.addSearchListener(new MySearchListener());
+        search.addSearchListener(new MySearchListener(bridge));
 		search.start();
 
 		return null;

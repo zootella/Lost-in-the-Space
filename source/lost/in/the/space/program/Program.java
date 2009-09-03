@@ -59,6 +59,7 @@ public class Program extends Close {
 		if (r.has("loaded")) {
 			core.loaded();
 		} else if (r.has("quitted")) {
+			System.out.println("system exit");
 			System.exit(0);
 		}
 	}

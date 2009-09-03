@@ -57,7 +57,7 @@ public class Core extends Close {
 				model.changed();
 			}
 			
-			//and also, every 5 minuts, make and run a task that shares the folder
+			//and also, every 5 minutes, make and run a task that shares the folder
 			if (done(share))
 				share = null;
 			if (shareAgo == null)
