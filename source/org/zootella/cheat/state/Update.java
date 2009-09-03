@@ -26,9 +26,13 @@ public class Update {
 	 * Call send() several times in a row, and receive() will only happen once.
 	 */
 	public void send() {
-		if (set) return; // We're already set to go off
-		SwingUtilities.invokeLater(new MyRunnable()); // Have Java call run() below separately and soon
-		set = true;
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+            	if (set) return; // We're already set to go off
+            	SwingUtilities.invokeLater(new MyRunnable()); // Have Java call run() below separately and soon
+            	set = true;
+            }
+        });
 	}
 	
 	/** true when we've set Java to call run(), and it hasn't yet. */
