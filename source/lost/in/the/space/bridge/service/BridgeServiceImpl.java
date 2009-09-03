@@ -1,6 +1,8 @@
 package lost.in.the.space.bridge.service;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.List;
 
 import lost.in.the.space.bridge.my.MyLifecycleEventListener;
 import lost.in.the.space.bridge.my.MySearchDetails;
@@ -9,9 +11,13 @@ import lost.in.the.space.program.Bridge;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.limewire.core.api.download.DownloadException;
+import org.limewire.core.api.download.DownloadListManager;
 import org.limewire.core.api.search.Search;
 import org.limewire.core.api.search.SearchDetails;
 import org.limewire.core.api.search.SearchFactory;
+import org.limewire.core.api.search.SearchResult;
+import org.limewire.core.impl.search.CoreSearch;
 import org.zootella.cheat.state.Receive;
 import org.zootella.cheat.state.Update;
 
@@ -28,12 +34,14 @@ import com.limegroup.gnutella.library.SharedFileCollection;
 	@Inject public BridgeServiceImpl(
 		LifecycleManager lifecycleManager,
 		FileCollectionManager fileCollectionManager,
-		SearchFactory searchFactory) {
+		SearchFactory searchFactory,
+		DownloadListManager downloadListManager) {
 		
 		// Save references to injected parts of LimeWire
 		this.lifecycleManager = lifecycleManager;
 		this.fileCollectionManager = fileCollectionManager;
 		this.searchFactory = searchFactory;
+		this.downloadListManager = downloadListManager;
 
 		// Connect to the Ford that lets us talk to the window above
 		update = new Update(new MyReceive());
@@ -47,6 +55,7 @@ import com.limegroup.gnutella.library.SharedFileCollection;
 	private final LifecycleManager lifecycleManager;
 	private final FileCollectionManager fileCollectionManager;
 	private final SearchFactory searchFactory;
+	private final DownloadListManager downloadListManager;
 	
 	private final Update update;
 	private final Bridge bridge;
@@ -125,45 +134,37 @@ import com.limegroup.gnutella.library.SharedFileCollection;
         Search search = searchFactory.createSearch(details);
         search.addSearchListener(new MySearchListener(bridge));
 		search.start();
+		
+		CoreSearch coreSearch = (CoreSearch)search;
+		coreSearch.getQueryGuid();
+		return Bridge.say("search", coreSearch.getQueryGuid().toString());
+	}
+	
+	private JSONObject download(JSONObject o) throws JSONException, DownloadException, IOException {
+
+		
+		
+		/*
+		// find the search
+		GUID guid = new GUID(o.getString("search_guid"));
+		SearchWithResults search = searchManager.getSearchByGuid(guid);
+
+		// find the search result
+		URN urn = URN.createSHA1Urn(o.getString("result_urn"));
+		List<SearchResult> list = new ArrayList<SearchResult>();
+		for (SearchResult result : search.getSearchResults()) {
+			if (result.getUrn().equals(urn)) {
+				list.add(result);
+			}
+		}
+		*/
+		
+		Search search = null;
+		List<SearchResult> list = null;
+		downloadListManager.addDownload(search, list);
 
 		return null;
 	}
-	
-	/*
-	private JSONObject results(JSONObject o) throws JSONException {
-		
-		GUID guid = new GUID(o.getString("results"));
-		
-		JSONArray a = new JSONArray();
-		SearchWithResults search = searchManager.getSearchByGuid(guid);
-		for (SearchResult result : search.getSearchResults()) {
-			JSONObject item = new JSONObject();
-			
-			
-			
-			item.put("filename", result.getFileName());
-			item.put("urn", result.getUrn().toString());
-
-			JSONArray a2 = new JSONArray();
-			List<RemoteHost> peers = result.getSources();
-			for (RemoteHost peer : peers) {
-
-				JSONObject p2 = new JSONObject();
-				p2.put("ip", peer.getFriendPresence().getFriend().getName());
-				a2.put(p2);
-			}
-			item.put("peers", a2);
-			
-			a.put(item);
-		}
-		
-		JSONObject r = new JSONObject();
-		r.put("search", search.getQueryString());
-		r.put("guid", guid.toHexString());
-		r.put("results", a);
-		return r;
-	}
-	*/
 	
 	
 	
