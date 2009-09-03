@@ -8,6 +8,7 @@ import org.zootella.cheat.exception.DiskException;
 import org.zootella.cheat.file.Path;
 import org.zootella.cheat.state.Close;
 import org.zootella.cheat.state.Model;
+import org.zootella.cheat.state.Once;
 import org.zootella.cheat.state.Receive;
 import org.zootella.cheat.time.After;
 import org.zootella.cheat.time.Ago;
@@ -47,10 +48,12 @@ public class Core extends Close {
 		public void receive() throws Exception {
 			if (closed()) return;
 			
-			if (loadedReady() && shareReady() && enterReady()) {
+			if (loadedReady() && shareReady() && enterReady() && once.once()) {
 				//and we don't have a Job right now
 				//make a new Job that runs off with that shared folder and entered text, and get the progress from it
-				System.out.println("ready to start");
+				
+				program.bridge.sendDown(Bridge.say("search", keyword));
+				
 				model.changed();
 			}
 			
@@ -66,6 +69,8 @@ public class Core extends Close {
 			
 		}
 	}
+	
+	private Once once = new Once();
 	
 	private boolean loaded;
 	public boolean loadedReady() { return loaded; }

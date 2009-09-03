@@ -1,4 +1,4 @@
-package lost.in.the.space.bridge;
+package lost.in.the.space.program;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,19 +8,19 @@ import org.json.JSONObject;
 import org.zootella.cheat.process.Mistake;
 import org.zootella.cheat.state.Update;
 
-public class Ford {
+public class Bridge {
 	
 	// Access
 	
-	/** Access the program's single Ford object that lets the ui and core pass messages. */
-	public synchronized static Ford instance() {
-		if (ford == null)
-			ford = new Ford();
-		return ford;
+	/** Access the program's single Bridge object that lets the ui and core pass messages. */
+	public synchronized static Bridge instance() {
+		if (bridge == null)
+			bridge = new Bridge();
+		return bridge;
 	}
-	private static Ford ford;
+	private static Bridge bridge;
 
-	private Ford() {
+	private Bridge() {
 		down = new ArrayList<JSONObject>();
 		up = new ArrayList<JSONObject>();
 	}

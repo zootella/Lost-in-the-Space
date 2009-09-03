@@ -1,6 +1,5 @@
 package lost.in.the.space.program;
 
-import lost.in.the.space.bridge.Ford;
 import lost.in.the.space.user.Window;
 
 import org.json.JSONObject;
@@ -18,13 +17,13 @@ public class Program extends Close {
 		// Connect to the Ford that lets us talk to the window above
 		update = new Update(new MyReceive());
 		update.send();
-		ford = Ford.instance();
-		ford.updateUp(update);
+		bridge = Bridge.instance();
+		bridge.updateUp(update); // We want to find out when messages come up
 	}
 	
 	public final Window window;
 	public final Core core;
-	public final Ford ford;
+	public final Bridge bridge;
 	
 	private final Update update;
 
@@ -33,7 +32,7 @@ public class Program extends Close {
 		close(window);
 		close(core);
 		Mistake.closeCheck();
-		ford.sendDown(Ford.say("quit"));
+		bridge.sendDown(Bridge.say("quit"));
 	}
 
 	// Command
@@ -44,7 +43,7 @@ public class Program extends Close {
 			
 			// Loop for each message that has arrived from the core below
 			while (true) {
-				JSONObject r = ford.receiveUp();
+				JSONObject r = bridge.receiveUp();
 				if (r == null)
 					return; // No more messages right now
 				

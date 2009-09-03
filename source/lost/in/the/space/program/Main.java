@@ -2,7 +2,7 @@ package lost.in.the.space.program;
 
 import javax.swing.SwingUtilities;
 
-import lost.in.the.space.bridge.Start;
+import lost.in.the.space.bridge.start.Start;
 
 import org.zootella.cheat.process.Mistake;
 
