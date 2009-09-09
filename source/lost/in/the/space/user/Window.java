@@ -70,8 +70,8 @@ public class Window extends Close {
 		open = new ClearButton(openAction, Guide.ink, Guide.font, Guide.open, null, "Open Folder");
 		keywordLabel = new ClearLabel(Guide.ink, Guide.font, Guide.keywordLabel, "Keyword");
 		extLabel = new ClearLabel(Guide.ink, Guide.font, Guide.extLabel, "Ext");
-		keywordField = new TextField(Guide.ink, Guide.select, Guide.ink, Guide.bigFont, Guide.keyword);
-		extField = new TextField(Guide.ink, Guide.select, Guide.ink, Guide.bigFont, Guide.ext);
+		keywordField = new TextField(Guide.ink, Guide.page, Guide.ink, Guide.select, Guide.bigFont, Guide.keyword);
+		extField = new TextField(Guide.ink, Guide.page, Guide.ink, Guide.select, Guide.bigFont, Guide.ext);
 		status = new ClearLabel(Guide.ink, Guide.font, Guide.status, null);
 		
 		panel = new MyPanel();

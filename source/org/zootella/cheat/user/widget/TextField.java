@@ -9,13 +9,16 @@ import javax.swing.JTextField;
 
 public class TextField {
 	
-	public TextField(Color ink, Color select, Color selectInk, Font font, Rectangle place) {
+	public TextField(Color ink, Color background, Color selectInk, Color selectBackground, Font font, Rectangle place) {
 		field = new JTextField();
 		field.setLayout(null);
 		field.setBounds(place);
+		
 		field.setForeground(ink);
-		field.setSelectionColor(select);
+		field.setBackground(background);
 		field.setSelectedTextColor(selectInk);
+		field.setSelectionColor(selectBackground);
+		
 		field.setFont(font);
 		field.setBorder(BorderFactory.createEmptyBorder());
 		
