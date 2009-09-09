@@ -1,5 +1,6 @@
 package org.zootella.cheat.user.widget;
 
+import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.Rectangle;
@@ -16,12 +17,13 @@ import org.zootella.cheat.process.Mistake;
 public class ClearButton {
 	
 	/** text and tip are optional and can be null. */
-	public ClearButton(Action action, Font font, Rectangle place, String text, String tip) {
+	public ClearButton(Action action, Color ink, Font font, Rectangle place, String text, String tip) {
 		this.action = action;
 		
 		label = new JLabel();
 		label.setLayout(null);
 		label.setBounds(place);
+		label.setForeground(ink);
 		label.setFont(font);
 
 		//actually not clear
@@ -29,6 +31,7 @@ public class ClearButton {
 		label.setBackground(new Color(0xffffff));
 		label.setOpaque(true);
 		*/
+		
 		
 		
 	    label.addMouseListener(new MyMouseListener());

@@ -57,8 +57,8 @@ public class Guide {
 	
 	// Color
 	
-	public static final Color lightColor = new Color(0xffffff);
-	public static final Color darkColor = new Color(0x000000);
+	public static final Color ink = new Color(0x808080);
+	public static final Color select = new Color(0xd6f2fe);
 	
 	// Font
 	

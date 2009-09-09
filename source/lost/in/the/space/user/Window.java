@@ -64,15 +64,15 @@ public class Window extends Close {
 		else
 			say = "Exit";
 		
-		exit = new ClearButton(exitAction, Guide.font, Guide.exit, null, say);
-		close = new ClearButton(closeAction, Guide.font, Guide.close, null, "Close");
-		choose = new ClearButton(chooseAction, Guide.font, Guide.choose, "Folder", "Choose Folder");
-		open = new ClearButton(openAction, Guide.font, Guide.open, null, "Open Folder");
-		keywordLabel = new ClearLabel(Guide.font, Guide.keywordLabel, "Keyword");
-		extLabel = new ClearLabel(Guide.font, Guide.extLabel, "Ext");
-		keywordField = new TextField(Guide.bigFont, Guide.keyword);
-		extField = new TextField(Guide.bigFont, Guide.ext);
-		status = new ClearLabel(Guide.font, Guide.status, null);
+		exit = new ClearButton(exitAction, Guide.ink, Guide.font, Guide.exit, null, say);
+		close = new ClearButton(closeAction, Guide.ink, Guide.font, Guide.close, null, "Close");
+		choose = new ClearButton(chooseAction, Guide.ink, Guide.font, Guide.choose, "Folder", "Choose Folder");
+		open = new ClearButton(openAction, Guide.ink, Guide.font, Guide.open, null, "Open Folder");
+		keywordLabel = new ClearLabel(Guide.ink, Guide.font, Guide.keywordLabel, "Keyword");
+		extLabel = new ClearLabel(Guide.ink, Guide.font, Guide.extLabel, "Ext");
+		keywordField = new TextField(Guide.ink, Guide.select, Guide.ink, Guide.bigFont, Guide.keyword);
+		extField = new TextField(Guide.ink, Guide.select, Guide.ink, Guide.bigFont, Guide.ext);
+		status = new ClearLabel(Guide.ink, Guide.font, Guide.status, null);
 		
 		panel = new MyPanel();
 		panel.setLayout(null);

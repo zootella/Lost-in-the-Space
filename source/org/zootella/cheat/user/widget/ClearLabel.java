@@ -10,13 +10,15 @@ import org.zootella.cheat.data.Text;
 
 public class ClearLabel {
 	
-	public ClearLabel(Font font, Rectangle place, String s) {
+	public ClearLabel(Color ink, Font font, Rectangle place, String s) {
 		label = new JLabel();
 		label.setLayout(null);
 		label.setBounds(place);
+		label.setForeground(ink);
 		label.setFont(font);
 		if (Text.is(s))
 			label.setText(s);
+		
 		
 		//actually not clear
 		/*
