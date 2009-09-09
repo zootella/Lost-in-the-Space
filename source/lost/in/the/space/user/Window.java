@@ -174,11 +174,11 @@ public class Window extends Close {
 	
 	// Windows and Mac
 
-	/** On Windows, the user right-clicked the taskbar button and clicked "X Close". */
+	/** On Windows, the user right-clicked the taskbar button and clicked "X Close" or keyed Alt+F4. */
 	private class MyWindowListener extends WindowAdapter {
 		public void windowClosing(WindowEvent w) {
 			try {
-				close(program); // Close the program
+				show(false);
 			} catch (Exception e) { Mistake.stop(e); }
 		}
 	}
