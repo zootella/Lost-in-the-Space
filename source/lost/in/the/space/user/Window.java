@@ -276,7 +276,10 @@ public class Window extends Close {
 		public OpenAction() { super("Open"); }
 		public void actionPerformed(ActionEvent a) {
 			try {
+				
+				Snippet.snippet();
 
+				/*
 				//TODO test a download right here
 				
 				if (downloadOnce.once()) {

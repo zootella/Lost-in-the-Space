@@ -72,7 +72,7 @@ public class Search extends Close {
 	}
 
 	/** The Result we've picked to download, null before we're ready to pick. */
-	public Hash pick() {
+	public File pick() {
 		
 		return null;
 		

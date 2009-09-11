@@ -3,39 +3,39 @@ package lost.in.the.space.cycle;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.zootella.cheat.file.Name;
 import org.zootella.cheat.file.Path;
 import org.zootella.cheat.net.name.Ip;
 
-public class Hash {
+public class File {
 	
-	public static Hash parse(JSONObject o) {
+	public static File parse(JSONObject o) {
 		try {
-			
 			o = o.getJSONObject("result");
 			
-			String hash = o.getString("hash");
-			long size = o.getLong("size");
+			File file = new File(o.getString("hash"), o.getLong("size"));
+			file.searches.add(o.getString("search"));
+			file.names.add(new Name(o.getString("name")));
 			
-			Hash h = new Hash(hash, size);
-			
-			return h;
-			
-			
-			
-			
+			JSONArray a = o.getJSONArray("peers");
+			for (int i = 0; i < a.length(); i++)
+				file.peers.add(new Ip(a.getString(i)));
+
+			return file;
+
 		} catch (JSONException e) {}
 		return null;
 	}
 	
-	public Hash(String hash, long size) {
+	public File(String hash, long size) {
 		this.hash = hash;
 		this.size = size;
 		names = new HashSet<Name>();
 		peers = new HashSet<Ip>();
-		guids = new HashSet<String>();
+		searches = new HashSet<String>();
 		
 	}
 	
@@ -48,7 +48,7 @@ public class Hash {
 	/** The IP addresses of the Gnutella peers that are sharing this file. */
 	public final Set<Ip> peers;
 	/** The GUIDs of the searches that told us where ths file is. */
-	public final Set<String> guids;
+	public final Set<String> searches;
 	/** The path where we saved this file, null before we've downloaded it. */
 	public Path path() { return path; }
 	public Path path;

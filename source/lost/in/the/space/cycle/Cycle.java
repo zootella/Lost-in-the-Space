@@ -40,7 +40,7 @@ public class Cycle extends Close {
 		pulse = new Pulse(new MyReceive());
 		model = new MyModel();
 		
-		hashes = new HashSet<Hash>();
+		files = new HashSet<File>();
 	}
 	
 	private final String keyword;
@@ -49,7 +49,7 @@ public class Cycle extends Close {
 	
 	private final Pulse pulse;
 	
-	private final Set<Hash> hashes;
+	private final Set<File> files;
 	
 	
 
@@ -86,9 +86,9 @@ public class Cycle extends Close {
 	/** A search result has come up from the core below. */
 	public void result(JSONObject r) {
 		
-		Hash hash = Hash.parse(r);
-		if (hash != null)
-			hashes.add(hash);
+		File file = File.parse(r);
+		if (file != null)
+			files.add(file);
 		
 		
 		
