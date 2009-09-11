@@ -8,17 +8,19 @@ import org.limewire.core.api.search.SearchDetails;
 
 public class MySearchDetails implements SearchDetails {
 
-	public MySearchDetails(String query) {
+	public MySearchDetails(String query, SearchCategory category) {
 		this.query = query;
+		this.category = category;
 	}
 	private final String query;
+	private final SearchCategory category;
 	
 	@Override public SearchCategory getSearchCategory() {
-		return SearchCategory.ALL;
+		return category;
 	}
 	
 	@Override public String getSearchQuery() {
-		return this.query;
+		return query;
 	}
 	
 	@Override public SearchType getSearchType() {

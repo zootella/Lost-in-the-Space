@@ -3,6 +3,8 @@ package lost.in.the.space.program;
 import java.util.ArrayList;
 import java.util.List;
 
+import lost.in.the.space.bridge.search.Searches;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.zootella.cheat.process.Mistake;
@@ -23,11 +25,15 @@ public class Bridge {
 	private Bridge() {
 		down = new ArrayList<JSONObject>();
 		up = new ArrayList<JSONObject>();
+		
+		searches = new Searches();
 	}
 	private final List<JSONObject> down;
 	private final List<JSONObject> up;
 	private Update updateDown;
 	private Update updateUp;
+	
+	public final Searches searches;
 
 	// Send
 	

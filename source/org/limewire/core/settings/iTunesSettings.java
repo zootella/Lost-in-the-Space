@@ -18,7 +18,7 @@ public class iTunesSettings extends LimeProps {
      */
     @InspectablePrimitive("add to itunes")
     public static BooleanSetting ITUNES_SUPPORT_ENABLED =
-        FACTORY.createBooleanSetting("ITUNES_SUPPORT_ENABLED", true);
+        FACTORY.createBooleanSetting("ITUNES_SUPPORT_ENABLED", false);
 
     
     /**

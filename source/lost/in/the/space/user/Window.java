@@ -18,15 +18,19 @@ import javax.swing.JPanel;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import lost.in.the.space.program.Bridge;
 import lost.in.the.space.program.Main;
 import lost.in.the.space.program.Program;
+import lost.in.the.space.program.Snippet;
 import net.roydesign.mac.MRJAdapter;
 
+import org.json.JSONObject;
 import org.zootella.cheat.desktop.Desktop;
 import org.zootella.cheat.desktop.Open;
 import org.zootella.cheat.exception.DiskException;
 import org.zootella.cheat.process.Mistake;
 import org.zootella.cheat.state.Close;
+import org.zootella.cheat.state.Once;
 import org.zootella.cheat.state.View;
 import org.zootella.cheat.user.CornerIcon;
 import org.zootella.cheat.user.Face;
@@ -265,10 +269,34 @@ public class Window extends Close {
 		public OpenAction() { super("Open"); }
 		public void actionPerformed(ActionEvent a) {
 			try {
+
+				//TODO test a download right here
+				
+				if (downloadOnce.once()) {
+					
+					JSONObject p = new JSONObject();
+					p.put("guid", keywordField.field.getText());
+					p.put("hash", extField.field.getText());
+					p.put("path", program.core.share().add("downloaded.mp3").toString());
+					
+					JSONObject o = new JSONObject();
+					o.put("download", p);
+					
+					program.bridge.sendDown(o);
+					
+				} else {
+
+					program.bridge.sendDown(Bridge.say("progress"));
+				}
+
+				/*
 				Open.file(program.core.share());
+				*/
 			} catch (Exception e) { Mistake.stop(e); }
 		}
 	}
+	
+	private final Once downloadOnce = new Once();
 
 	// View
 

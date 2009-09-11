@@ -1,5 +1,6 @@
 package lost.in.the.space.program;
 
+import org.json.JSONObject;
 import org.limewire.util.SystemUtils;
 import org.limewire.util.SystemUtils.SpecialLocations;
 import org.zootella.cheat.data.Text;
@@ -52,7 +53,12 @@ public class Core extends Close {
 				//and we don't have a Job right now
 				//make a new Job that runs off with that shared folder and entered text, and get the progress from it
 				
-				program.bridge.sendDown(Bridge.say("search", keyword));
+				JSONObject o = new JSONObject();
+				o.put("keyword", keyword);
+				JSONObject p = new JSONObject();
+				p.put("search", o);
+				
+				program.bridge.sendDown(p);
 				
 				model.changed();
 			}
