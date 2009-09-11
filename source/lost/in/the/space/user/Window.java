@@ -103,13 +103,13 @@ public class Window extends Close {
 		frame.setResizable(false);
 		frame.setLayout(null);
 		frame.setSize(Guide.window);
-		frame.setIconImage(Face.image(Guide.icon));
+		frame.setIconImage(skin.image(Guide.icon));
 		frame.setTitle(Main.name);
 		frame.setBounds(Screen.positionSize(frame.getSize().width, frame.getSize().height));
 		frame.setContentPane(panel);
 
 		if (Desktop.hasTray())
-			icon = new CornerIcon(Main.name, Face.image(Guide.icon), restoreAction, exitAction);
+			icon = new CornerIcon(Main.name, skin.image(Guide.icon), restoreAction, exitAction);
 		else
 			icon = null;
 		

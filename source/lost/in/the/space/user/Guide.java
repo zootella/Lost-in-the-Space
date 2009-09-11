@@ -6,6 +6,11 @@ import java.awt.Point;
 import java.awt.Rectangle;
 
 public class Guide {
+
+	// File
+
+	/** Filename skin.png in the present working directory. */
+	public static final String skin = "skin.png";
 	
 	// Define
 	
@@ -47,13 +52,10 @@ public class Guide {
 	public static final Rectangle ext = new Rectangle(margin(2) + keywordWidth(), c, extWidth, big);
 	
 	public static final Rectangle status = new Rectangle(margin(1), d, window.width - margin(2), line);
-
-	// Paths to images
-
-	/** Package name path to icon.gif in the resource tree and then zipped inside the jar. */
-	public static final String icon = "lost/in/the/space/icon.gif";
-	/** Filename skin.png in the present working directory. */
-	public static final String skin = "skin.png";
+	
+	// Icon
+	
+	public static final Rectangle icon = new Rectangle(keyword.x + 124, keyword.y + 9, 16, 16);
 	
 	// Color
 	
