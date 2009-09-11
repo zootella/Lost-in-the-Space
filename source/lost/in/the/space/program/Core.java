@@ -1,5 +1,7 @@
 package lost.in.the.space.program;
 
+import lost.in.the.space.cycle.Cycle;
+
 import org.json.JSONObject;
 import org.limewire.util.SystemUtils;
 import org.limewire.util.SystemUtils.SpecialLocations;
@@ -143,6 +145,14 @@ public class Core extends Close {
 	
 	
 	
+	private Cycle cycle;
+	
+	public void result(JSONObject r) {
+		if (is(cycle))
+			cycle.result(r);
+		
+		
+	}
 	
 
 }

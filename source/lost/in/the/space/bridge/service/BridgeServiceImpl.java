@@ -49,11 +49,10 @@ import com.limegroup.gnutella.library.SharedFileCollection;
 		this.searchFactory = searchFactory;
 		this.downloadListManager = downloadListManager;
 
-		// Connect to the Bridge that lets us talk to the window above
 		update = new Update(new MyReceive());
 		update.send(); // There may already be a message waiting for us
-		bridge = Bridge.instance();
-		bridge.updateDown(update); // We want to find out when messages come down
+		bridge = Bridge.instance(); // Connect to the program's Bridge that lets us talk to the window above
+		bridge.updateDown(update); // Sign up to find out when new messages come down
 		
 		lifecycleManager.addListener(new MyLifecycleEventListener(bridge, update));
 	}
