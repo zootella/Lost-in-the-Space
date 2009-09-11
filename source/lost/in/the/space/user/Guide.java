@@ -3,6 +3,7 @@ package lost.in.the.space.user;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Point;
 import java.awt.Rectangle;
 
 public class Guide {
@@ -57,10 +58,12 @@ public class Guide {
 	
 	// Color
 	
-	public static final Color ink = new Color(0x000000);//new Color(0x808080);
-	public static final Color select = new Color(0xd6f2fe);
-	public static final Color page = new Color(0xffffff);
-	
+	public static final Point ink = new Point(keyword.x + 11, keyword.y + 11);
+	public static final Point typeInk = new Point(keyword.x + 31, keyword.y + 11);
+	public static final Point typePage = new Point(keyword.x + 29, keyword.y + 9);
+	public static final Point selectInk = new Point(keyword.x + 51, keyword.y + 11);
+	public static final Point selectPage = new Point(keyword.x + 49, keyword.y + 9);
+
 	// Font
 	
 	public static final Font font = new Font("Tahoma", Font.PLAIN, 11);

@@ -1,6 +1,8 @@
 package lost.in.the.space.user;
 
+import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -28,6 +30,7 @@ import org.json.JSONObject;
 import org.zootella.cheat.desktop.Desktop;
 import org.zootella.cheat.desktop.Open;
 import org.zootella.cheat.exception.DiskException;
+import org.zootella.cheat.file.Path;
 import org.zootella.cheat.process.Mistake;
 import org.zootella.cheat.state.Close;
 import org.zootella.cheat.state.Once;
@@ -36,6 +39,7 @@ import org.zootella.cheat.user.CornerIcon;
 import org.zootella.cheat.user.Face;
 import org.zootella.cheat.user.Refresh;
 import org.zootella.cheat.user.Screen;
+import org.zootella.cheat.user.skin.Skin;
 import org.zootella.cheat.user.widget.ClearButton;
 import org.zootella.cheat.user.widget.ClearLabel;
 import org.zootella.cheat.user.widget.Grip;
@@ -51,10 +55,13 @@ public class Window extends Close {
 		this.program = program;
 		
 		Face.blend(); // Tell Java how to show the program's user interface
-		
-		try {
-			image = ImageIO.read(new File(Guide.skin));
-		} catch (IOException e) { throw new DiskException(e); }
+
+		skin = new Skin(Path.work(Guide.skin), Guide.window);
+		Color ink = skin.color(Guide.ink);
+		Color typeInk = skin.color(Guide.typeInk);
+		Color typePage = skin.color(Guide.typePage);
+		Color selectInk = skin.color(Guide.selectInk);
+		Color selectPage = skin.color(Guide.selectPage);
 
 		restoreAction = new RestoreAction();
 		exitAction = new ExitAction();
@@ -68,15 +75,15 @@ public class Window extends Close {
 		else
 			say = "Exit";
 		
-		exit = new ClearButton(exitAction, Guide.ink, Guide.font, Guide.exit, null, say);
-		close = new ClearButton(closeAction, Guide.ink, Guide.font, Guide.close, null, "Close");
-		choose = new ClearButton(chooseAction, Guide.ink, Guide.font, Guide.choose, "Folder", "Choose Folder");
-		open = new ClearButton(openAction, Guide.ink, Guide.font, Guide.open, null, "Open Folder");
-		keywordLabel = new ClearLabel(Guide.ink, Guide.font, Guide.keywordLabel, "Keyword");
-		extLabel = new ClearLabel(Guide.ink, Guide.font, Guide.extLabel, "Ext");
-		keywordField = new TextField(Guide.ink, Guide.page, Guide.ink, Guide.select, Guide.bigFont, Guide.keyword);
-		extField = new TextField(Guide.ink, Guide.page, Guide.ink, Guide.select, Guide.bigFont, Guide.ext);
-		status = new ClearLabel(Guide.ink, Guide.font, Guide.status, null);
+		exit = new ClearButton(exitAction, ink, Guide.font, Guide.exit, null, say);
+		close = new ClearButton(closeAction, ink, Guide.font, Guide.close, null, "Close");
+		choose = new ClearButton(chooseAction, ink, Guide.font, Guide.choose, "Folder", "Choose Folder");
+		open = new ClearButton(openAction, ink, Guide.font, Guide.open, null, "Open Folder");
+		keywordLabel = new ClearLabel(ink, Guide.font, Guide.keywordLabel, "Keyword");
+		extLabel = new ClearLabel(ink, Guide.font, Guide.extLabel, "Ext");
+		keywordField = new TextField(typeInk, typePage, selectInk, selectPage, Guide.bigFont, Guide.keyword);
+		extField = new TextField(typeInk, typePage, selectInk, selectPage, Guide.bigFont, Guide.ext);
+		status = new ClearLabel(ink, Guide.font, Guide.status, null);
 		
 		panel = new MyPanel();
 		panel.setLayout(null);
@@ -127,7 +134,7 @@ public class Window extends Close {
 	public final JFrame frame;
 	public final JPanel panel;
 	public final CornerIcon icon;
-	private final BufferedImage image;
+	private final Skin skin;
 	
 	private final ClearButton exit;
 	private final ClearButton close;
@@ -162,7 +169,7 @@ public class Window extends Close {
 	/** Java is going to paint the window. */
 	private class MyPanel extends JPanel {
 		@Override public void paintComponent(Graphics g) {
-			g.drawImage(image, 0, 0, null); // Draw the skin background
+			g.drawImage(skin.image, 0, 0, null); // Draw the skin background
 		}
 	}
 
