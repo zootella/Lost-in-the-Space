@@ -88,7 +88,7 @@ public abstract class Close {
 	private static final Set<Close> list = new HashSet<Close>();
 	private static synchronized void add(Close c) { list.add(c); }
 	private static synchronized void remove(Close c) { list.remove(c); }
-	public static synchronized void print() {
+	private static synchronized void print() {
 		if (list.size() != 0) {
 			System.out.print(list.size() + " objects open:\n");
 			for (Close c : list)

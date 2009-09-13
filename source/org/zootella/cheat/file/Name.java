@@ -3,6 +3,7 @@ package org.zootella.cheat.file;
 import org.zootella.cheat.data.Data;
 import org.zootella.cheat.data.Text;
 import org.zootella.cheat.data.TextSplit;
+import org.zootella.cheat.net.name.Ip;
 
 /** A file name and extension, like "name.ext". */
 public class Name {
@@ -86,5 +87,14 @@ public class Name {
 	/** Make a new Name like "Hello ryio3tz5.db" that won't conflict with files already in a folder. */
 	public static Name unique() {
 		return new Name(Text.start(Data.random(8).base32(), 8), "db");
+	}
+
+	@Override public boolean equals(Object o) {
+		if (o == null || !(o instanceof Name)) return false;
+		return name.equals(((Name)o).name) && extension.equals(((Name)o).extension);
+	}
+	
+	@Override public int hashCode() {
+		return name.hashCode() * extension.hashCode();
 	}
 }

@@ -52,7 +52,7 @@ public class Program extends Close {
 			}
 		}
 	}
-	
+
 	/** Look at r from the core below. */
 	public void message(JSONObject r) {
 		

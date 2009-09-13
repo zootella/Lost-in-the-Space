@@ -26,7 +26,7 @@ public class Update {
 	 * Call send() several times in a row, and receive() will only happen once.
 	 */
 	public void send() {
-        SwingUtilities.invokeLater(new Runnable() {
+        SwingUtilities.invokeLater(new Runnable() { //TODO remove this to call directly in an entirely event-driven program
             public void run() {
             	if (set) return; // We're already set to go off
             	SwingUtilities.invokeLater(new MyRunnable()); // Have Java call run() below separately and soon

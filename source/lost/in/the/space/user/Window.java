@@ -277,13 +277,13 @@ public class Window extends Close {
 		public void actionPerformed(ActionEvent a) {
 			try {
 				
+				/*
+
+				// Snippet
 				Snippet.snippet();
 
-				/*
-				//TODO test a download right here
-				
+				// Download
 				if (downloadOnce.once()) {
-					
 					JSONObject p = new JSONObject();
 					p.put("guid", keywordField.field.getText());
 					p.put("hash", extField.field.getText());
@@ -293,15 +293,13 @@ public class Window extends Close {
 					o.put("download", p);
 					
 					program.bridge.sendDown(o);
-					
 				} else {
-
 					program.bridge.sendDown(Bridge.say("progress"));
 				}
 
-				/*
-				Open.file(program.core.share());
 				*/
+				
+				Open.file(program.core.share());
 			} catch (Exception e) { Mistake.stop(e); }
 		}
 	}
@@ -316,8 +314,8 @@ public class Window extends Close {
 
 		// The Model beneath changed, we need to update what we show the user
 		public void refresh() {
-			Refresh.text(status.label, program.core.model.status());
 			Refresh.text(open.label, program.core.model.share());
+			Refresh.text(status.label, program.core.model.status());
 		}
 
 		// The Model beneath closed, take this View off the screen

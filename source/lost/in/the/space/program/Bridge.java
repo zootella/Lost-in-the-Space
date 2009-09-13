@@ -33,7 +33,7 @@ public class Bridge {
 	private Update updateDown;
 	private Update updateUp;
 	
-	public final Searches searches;
+	public final Searches searches; // We have to keep Search and SearchResult objects on the LimeWire side of the Bridge
 
 	// Send
 	

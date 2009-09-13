@@ -3,6 +3,10 @@ package org.zootella.cheat.time;
 /** An Ago object records how long ago something most recently happened, if ever. */
 public class OldAgo {
 	
+	public OldAgo() {
+		
+	}
+	
 	// Inside
 	
 	/** The time in milliseconds since January 1970 and when we were last set, 0 if we've never been set. */

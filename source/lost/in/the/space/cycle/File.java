@@ -49,9 +49,16 @@ public class File {
 	public final Set<Ip> peers;
 	/** The GUIDs of the searches that told us where ths file is. */
 	public final Set<String> searches;
+	
 	/** The path where we saved this file, null before we've downloaded it. */
 	public Path path() { return path; }
 	public Path path;
+	
+	/** Record the Path where we saved this file. */
+	public void path(Path path) {
+		if (path != null) throw new IllegalStateException(); // Only set this once
+		this.path = path;
+	}
 	
 	public void add(Name name) {
 		names.add(name);
@@ -60,7 +67,14 @@ public class File {
 		peers.add(ip);
 	}
 	
-	//TODO add the same name and ip several times, make sure the Set only keeps each unique one once
+	/** Copy f's names, peers, and searches into this File object. */
+	public void add(File f) {
+		if (!hash.equals(f.hash)) throw new IllegalArgumentException();
+		names.addAll(f.names);
+		peers.addAll(f.peers);
+		searches.addAll(f.searches);
+	}
+	
 	
 	
 

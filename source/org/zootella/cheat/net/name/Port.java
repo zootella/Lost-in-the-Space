@@ -31,10 +31,19 @@ public class Port {
 	/** The port number, 0 through 65535. */
 	public final int port;
 	
-	// Text
+	// Object
 
 	@Override public String toString() {
 		return port + "";
+	}
+
+	@Override public boolean equals(Object o) {
+		if (o == null || !(o instanceof Port)) return false;
+		return port == ((Port)o).port;
+	}
+	
+	@Override public int hashCode() {
+		return port;
 	}
 	
 	// Random

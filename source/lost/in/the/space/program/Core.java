@@ -9,9 +9,9 @@ import org.zootella.cheat.data.Text;
 import org.zootella.cheat.exception.DataException;
 import org.zootella.cheat.exception.DiskException;
 import org.zootella.cheat.file.Path;
+import org.zootella.cheat.process.Mistake;
 import org.zootella.cheat.state.Close;
 import org.zootella.cheat.state.Model;
-import org.zootella.cheat.state.Once;
 import org.zootella.cheat.state.Receive;
 import org.zootella.cheat.time.After;
 import org.zootella.cheat.time.Ago;
@@ -27,7 +27,7 @@ public class Core extends Close {
 		pulse = new Pulse(receive);
 
 		model = new MyModel();
-		model.changed();
+		model.pulse();
 		
 		enter = new After(enterTime);
 		
@@ -38,6 +38,7 @@ public class Core extends Close {
 	public final Program program;
 	private final Pulse pulse;
 	private final After enter;
+	private Cycle cycle;
 	
 
 	@Override public void close() {
@@ -45,40 +46,33 @@ public class Core extends Close {
 		close(share);
 		close(model);
 		close(pulse);
+		close(cycle);
 	}
 	
 	private class MyReceive implements Receive {
 		public void receive() throws Exception {
 			if (closed()) return;
-			
-			if (loadedReady() && shareReady() && enterReady() && once.once()) {
-				//and we don't have a Job right now
-				//make a new Job that runs off with that shared folder and entered text, and get the progress from it
+			try {
 				
-				JSONObject o = new JSONObject();
-				o.put("keyword", keyword);
-				JSONObject p = new JSONObject();
-				p.put("search", o);
+				// Every 5 minutes, share everything in the folder
+				if (done(share))
+					share = null;
+				if (shareAgo == null)
+					shareAgo = new Ago(shareTime);
+				if (no(share) && shareAgo.enough())
+					share = new Share(program, folder);
 				
-				program.bridge.sendDown(p);
-				
-				model.changed();
-			}
-			
-			//and also, every 5 minutes, make and run a task that shares the folder
-			if (done(share))
-				share = null;
-			if (shareAgo == null)
-				shareAgo = new Ago(shareTime);
-			if (no(share) && shareAgo.enough())
-				share = new Share(program, folder);
-			
-			
-			
+				// Run one Cycle after another that does a search and downloads stuff
+				if (done(cycle))
+					cycle = null;
+				if (no(cycle) && loadedReady() && shareReady() && enterReady()) {
+					cycle = new Cycle(program.bridge, keyword, ext, folder);
+					model.changed();
+				}
+
+			} catch (Exception e) { Mistake.stop(e); }
 		}
 	}
-	
-	private Once once = new Once();
 	
 	private boolean loaded;
 	public boolean loadedReady() { return loaded; }
@@ -134,18 +128,18 @@ public class Core extends Close {
 		}
 		
 		public String status() {
-			if (!loadedReady()) return "Loading...";
+			if (is(cycle)) return cycle.status();
+
 			if (!shareReady()) return "Click above to choose a folder";
 			if (!enterReady()) return "Type a search keyword and file extension to begin";
+			if (!loadedReady()) return "Loading...";
 			
-			return "Ready";
+			return "";
 		}
 	}
-	private Core me() { return this; } // Give inner classes a link to this outer object
 	
 	
 	
-	private Cycle cycle;
 	
 	public void result(JSONObject r) {
 		if (is(cycle))

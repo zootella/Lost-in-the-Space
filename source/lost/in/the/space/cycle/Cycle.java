@@ -1,17 +1,18 @@
 package lost.in.the.space.cycle;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
-import lost.in.the.space.program.Core.MyModel;
+import lost.in.the.space.program.Bridge;
 
 import org.json.JSONObject;
+import org.zootella.cheat.file.Name;
 import org.zootella.cheat.file.Path;
-import org.zootella.cheat.process.Mistake;
+import org.zootella.cheat.net.name.Ip;
 import org.zootella.cheat.state.Close;
-import org.zootella.cheat.state.Model;
+import org.zootella.cheat.state.Once;
 import org.zootella.cheat.state.Receive;
 import org.zootella.cheat.time.Pulse;
+import org.zootella.cheat.user.Describe;
 
 public class Cycle extends Close {
 	
@@ -32,67 +33,79 @@ public class Cycle extends Close {
 	
 	// have this object do a single cycle
 	
-	public Cycle(String keyword, String ext, Path folder) {
+	public Cycle(Bridge bridge, String keyword, String ext, Path folder) {
+		this.bridge = bridge;
 		this.keyword = keyword;
 		this.ext = ext;
 		this.folder = folder;
 		
 		pulse = new Pulse(new MyReceive());
-		model = new MyModel();
-		
-		files = new HashSet<File>();
 	}
 	
+	private final Bridge bridge;
 	private final String keyword;
 	private final String ext;
 	private final Path folder;
 	
 	private final Pulse pulse;
 	
-	private final Set<File> files;
+	private Search search;
 	
 	
 
 	@Override public void close() { //TODO make this also useful for canceling
 		if (already()) return;
 		close(pulse);
-		close(model);
+		close(search);
 	}
 
 	private class MyReceive implements Receive {
 		@Override public void receive() throws Exception {
 			if (closed()) return;
-			try {
+				
+			if (no(search))
+				search = new Search(bridge, keyword, ext);
+			if (done(search) && once.once()) {
+				print(search.files());
+			}
 				
 				
 				
+			//TODO at the end, have the core shut down all the downloads and searches
 				
-				
-			} catch (Exception e) { Mistake.stop(e); }
 		}
 	}
 	
+	public Once once = new Once();
 	
-	public final MyModel model;
-	public class MyModel extends Model {
-		
-		public String status() {
-			return "cycle status";
-		}
+	public String status() {
+		if (is(search))
+			return search.status();
+		return "";
 	}
-	private Cycle me() { return this; } // Give inner classes a link to this outer object
 	
 	
 	/** A search result has come up from the core below. */
 	public void result(JSONObject r) {
-		
-		File file = File.parse(r);
-		if (file != null)
-			files.add(file);
-		
-		
-		
+		if (is(search))
+			search.result(r);
 	}
+	
+	
+	
+	public void print(List<File> files) {
+		for (File f : files) {
+			System.out.println("");
+			for (String s : f.searches)
+				System.out.println(s);
+			System.out.println(f.hash + " " + f.size + " bytes");
+			for (Name n : f.names)
+				System.out.println("  " + n.toString());
+			for (Ip i : f.peers)
+				System.out.println("  " + i.toString());
+		}
+	}
+	
 	
 	
 }
