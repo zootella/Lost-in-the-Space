@@ -2,6 +2,7 @@ package lost.in.the.space.cycle;
 
 import java.util.List;
 
+import lost.in.the.space.cycle.pick.PickFile;
 import lost.in.the.space.program.Bridge;
 
 import org.json.JSONObject;
@@ -93,8 +94,8 @@ public class Cycle extends Close {
 	
 	
 	
-	public void print(List<File> files) {
-		for (File f : files) {
+	public void print(List<PickFile> files) {
+		for (PickFile f : files) {
 			System.out.println("");
 			for (String s : f.searches)
 				System.out.println(s);

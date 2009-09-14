@@ -3,14 +3,14 @@ package lost.in.the.space.cycle;
 import java.util.ArrayList;
 import java.util.List;
 
+import lost.in.the.space.cycle.pick.Extension;
+import lost.in.the.space.cycle.pick.PickFile;
 import lost.in.the.space.program.Bridge;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.zootella.cheat.file.Name;
-import org.zootella.cheat.net.name.Ip;
+import org.zootella.cheat.data.Text;
 import org.zootella.cheat.state.Close;
-import org.zootella.cheat.state.Once;
 import org.zootella.cheat.state.Receive;
 import org.zootella.cheat.time.Now;
 import org.zootella.cheat.time.Pulse;
@@ -24,7 +24,7 @@ public class Search extends Close {
 		this.keyword = keyword;
 		this.ext = ext;
 		
-		files = new ArrayList<File>();
+		files = new ArrayList<PickFile>();
 		pulse = new Pulse(new MyReceive());
 	}
 	
@@ -34,7 +34,7 @@ public class Search extends Close {
 	private final String ext;
 	
 	private final Pulse pulse;
-	private final List<File> files;
+	private final List<PickFile> files;
 	
 	private Now search;
 
@@ -67,7 +67,7 @@ public class Search extends Close {
 	}
 
 	/** The Result we've picked to download, null before we're ready to pick. */
-	public List<File> files() {
+	public List<PickFile> files() {
 		if (!closed()) throw new IllegalStateException(); // Don't call this while results are still coming in
 		return files;
 	}
@@ -76,7 +76,11 @@ public class Search extends Close {
 
 		JSONObject p = new JSONObject();
 		p.put("keyword", keyword);
-		
+
+		String type = Extension.type(ext);
+		if (Text.is(type))
+			p.put("type", type);
+
 		JSONObject o = new JSONObject();
 		o.put("search", p);
 		
@@ -87,11 +91,11 @@ public class Search extends Close {
 	public void result(JSONObject o) {
 		if (closed()) return; // A closed object promises not to change
 		
-		File f = File.parse(o); // Parse the text message from the core into a File object
+		PickFile f = PickFile.parse(o); // Parse the text message from the core into a File object
 		if (f == null)
 			return; // Incorrect text, ignore it
 		
-		for (File file : files) { // Loop through the File objects we already have
+		for (PickFile file : files) { // Loop through the File objects we already have
 			if (file.hash.equals(f.hash)) { // This new one has the same hash as one in our list
 				file.add(f); // Copy in the new names and peers
 				return; // Done

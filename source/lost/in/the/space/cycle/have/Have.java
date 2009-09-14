@@ -1,4 +1,4 @@
-package lost.in.the.space.cycle;
+package lost.in.the.space.cycle.have;
 
 public class Have {
 	

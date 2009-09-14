@@ -1,4 +1,4 @@
-package lost.in.the.space.cycle;
+package lost.in.the.space.cycle.pick;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -10,13 +10,13 @@ import org.zootella.cheat.file.Name;
 import org.zootella.cheat.file.Path;
 import org.zootella.cheat.net.name.Ip;
 
-public class File {
+public class PickFile {
 	
-	public static File parse(JSONObject o) {
+	public static PickFile parse(JSONObject o) {
 		try {
 			o = o.getJSONObject("result");
 			
-			File file = new File(o.getString("hash"), o.getLong("size"));
+			PickFile file = new PickFile(o.getString("hash"), o.getLong("size"));
 			file.searches.add(o.getString("search"));
 			file.names.add(new Name(o.getString("name")));
 			
@@ -30,7 +30,7 @@ public class File {
 		return null;
 	}
 	
-	public File(String hash, long size) {
+	public PickFile(String hash, long size) {
 		this.hash = hash;
 		this.size = size;
 		names = new HashSet<Name>();
@@ -50,16 +50,6 @@ public class File {
 	/** The GUIDs of the searches that told us where ths file is. */
 	public final Set<String> searches;
 	
-	/** The path where we saved this file, null before we've downloaded it. */
-	public Path path() { return path; }
-	public Path path;
-	
-	/** Record the Path where we saved this file. */
-	public void path(Path path) {
-		if (path != null) throw new IllegalStateException(); // Only set this once
-		this.path = path;
-	}
-	
 	public void add(Name name) {
 		names.add(name);
 	}
@@ -68,7 +58,7 @@ public class File {
 	}
 	
 	/** Copy f's names, peers, and searches into this File object. */
-	public void add(File f) {
+	public void add(PickFile f) {
 		if (!hash.equals(f.hash)) throw new IllegalArgumentException();
 		names.addAll(f.names);
 		peers.addAll(f.peers);
