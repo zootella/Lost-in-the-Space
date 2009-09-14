@@ -2,7 +2,8 @@ package lost.in.the.space.cycle;
 
 import java.util.List;
 
-import lost.in.the.space.cycle.pick.PickFile;
+import lost.in.the.space.cycle.pick.Pick;
+import lost.in.the.space.cycle.pick.ResultFile;
 import lost.in.the.space.program.Bridge;
 
 import org.json.JSONObject;
@@ -67,7 +68,10 @@ public class Cycle extends Close {
 			if (no(search))
 				search = new Search(bridge, keyword, ext);
 			if (done(search) && once.once()) {
-				print(search.files());
+				Pick.pick(search.files(), ext);
+
+				for (ResultFile file : search.files())
+					System.out.println(file.toString());
 			}
 				
 				
@@ -92,20 +96,6 @@ public class Cycle extends Close {
 			search.result(r);
 	}
 	
-	
-	
-	public void print(List<PickFile> files) {
-		for (PickFile f : files) {
-			System.out.println("");
-			for (String s : f.searches)
-				System.out.println(s);
-			System.out.println(f.hash + " " + f.size + " bytes");
-			for (Name n : f.names)
-				System.out.println("  " + n.toString());
-			for (Ip i : f.peers)
-				System.out.println("  " + i.toString());
-		}
-	}
 	
 	
 	

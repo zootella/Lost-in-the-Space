@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lost.in.the.space.cycle.pick.Extension;
-import lost.in.the.space.cycle.pick.PickFile;
+import lost.in.the.space.cycle.pick.ResultFile;
 import lost.in.the.space.program.Bridge;
 
 import org.json.JSONException;
@@ -24,7 +24,7 @@ public class Search extends Close {
 		this.keyword = keyword;
 		this.ext = ext;
 		
-		files = new ArrayList<PickFile>();
+		files = new ArrayList<ResultFile>();
 		pulse = new Pulse(new MyReceive());
 	}
 	
@@ -34,7 +34,7 @@ public class Search extends Close {
 	private final String ext;
 	
 	private final Pulse pulse;
-	private final List<PickFile> files;
+	private final List<ResultFile> files;
 	
 	private Now search;
 
@@ -67,7 +67,7 @@ public class Search extends Close {
 	}
 
 	/** The Result we've picked to download, null before we're ready to pick. */
-	public List<PickFile> files() {
+	public List<ResultFile> files() {
 		if (!closed()) throw new IllegalStateException(); // Don't call this while results are still coming in
 		return files;
 	}
@@ -91,11 +91,11 @@ public class Search extends Close {
 	public void result(JSONObject o) {
 		if (closed()) return; // A closed object promises not to change
 		
-		PickFile f = PickFile.parse(o); // Parse the text message from the core into a File object
+		ResultFile f = ResultFile.parse(o); // Parse the text message from the core into a File object
 		if (f == null)
 			return; // Incorrect text, ignore it
 		
-		for (PickFile file : files) { // Loop through the File objects we already have
+		for (ResultFile file : files) { // Loop through the File objects we already have
 			if (file.hash.equals(f.hash)) { // This new one has the same hash as one in our list
 				file.add(f); // Copy in the new names and peers
 				return; // Done
