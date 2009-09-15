@@ -1,6 +1,7 @@
 package lost.in.the.space.program;
 
 import lost.in.the.space.cycle.Cycle;
+import lost.in.the.space.cycle.pick.Pick;
 
 import org.json.JSONObject;
 import org.limewire.util.SystemUtils;
@@ -31,6 +32,8 @@ public class Core extends Close {
 		
 		enter = new After(enterTime);
 		
+		pick = new Pick();
+		
 		share((new Path(SystemUtils.getSpecialPath(SpecialLocations.DOCUMENTS))).add("Share").toString());
 		
 		
@@ -39,6 +42,7 @@ public class Core extends Close {
 	private final Pulse pulse;
 	private final After enter;
 	private Cycle cycle;
+	public final Pick pick;
 	
 
 	@Override public void close() {
@@ -66,7 +70,7 @@ public class Core extends Close {
 				if (done(cycle))
 					cycle = null;
 				if (no(cycle) && loadedReady() && shareReady() && enterReady()) {
-					cycle = new Cycle(program.bridge, keyword, ext, folder);
+					cycle = new Cycle(program.bridge, pick, keyword, ext, folder);
 					model.changed();
 				}
 
@@ -144,8 +148,10 @@ public class Core extends Close {
 	public void result(JSONObject r) {
 		if (is(cycle))
 			cycle.result(r);
-		
-		
+	}
+	public void progress(JSONObject r) {
+		if (is(cycle))
+			cycle.progress(r);
 	}
 	
 

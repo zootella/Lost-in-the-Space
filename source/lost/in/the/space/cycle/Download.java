@@ -1,13 +1,16 @@
 package lost.in.the.space.cycle;
 
-import org.zootella.cheat.state.Close;
 
-public class Download extends Close {
-
-	@Override
-	public void close() {
-		// TODO Auto-generated method stub
-		
+public class Download {
+	
+	public Download(String hash, long size) {
+		this.hash = hash;
+		this.size = size;
 	}
-
+	public final String hash;
+	public final long size;
+	
+	public long saved;
+	
+	
 }

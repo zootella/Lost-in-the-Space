@@ -131,7 +131,7 @@ import com.limegroup.gnutella.library.SharedFileCollection;
 		lifecycleManager.shutdown(); // Later, the core will say "quitted" upwards
 		return null;
 	}
-	
+
 	// Share
 
 	/** Share a file. */

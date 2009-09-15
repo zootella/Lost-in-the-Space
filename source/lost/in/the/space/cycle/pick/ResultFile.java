@@ -16,8 +16,7 @@ public class ResultFile {
 		try {
 			o = o.getJSONObject("result");
 			
-			ResultFile file = new ResultFile(o.getString("hash"), o.getLong("size"));
-			file.searches.add(o.getString("search"));
+			ResultFile file = new ResultFile(o.getString("search"), o.getString("hash"), o.getLong("size"));
 			file.names.add(new Name(o.getString("name")));
 			
 			JSONArray a = o.getJSONArray("peers");
@@ -30,15 +29,16 @@ public class ResultFile {
 		return null;
 	}
 	
-	public ResultFile(String hash, long size) {
+	public ResultFile(String search, String hash, long size) {
+		this.search = search;
 		this.hash = hash;
 		this.size = size;
 		names = new HashSet<Name>();
 		peers = new HashSet<Ip>();
-		searches = new HashSet<String>();
-		
 	}
 	
+	/** The GUID of the search that told us where this file is. */
+	public final String search;
 	/** The SHA1 hash of this file. */
 	public final String hash;
 	/** The size of the file in bytes. */
@@ -47,11 +47,11 @@ public class ResultFile {
 	public final Set<Name> names;
 	/** The IP addresses of the Gnutella peers that are sharing this file. */
 	public final Set<Ip> peers;
-	/** The GUIDs of the searches that told us where this file is. */
-	public final Set<String> searches;
 	
 	public void point(int p) { points += p; }
 	private int points;
+	
+	
 	
 	public void add(Name name) {
 		names.add(name);
@@ -65,7 +65,6 @@ public class ResultFile {
 		if (!hash.equals(f.hash)) throw new IllegalArgumentException();
 		names.addAll(f.names);
 		peers.addAll(f.peers);
-		searches.addAll(f.searches);
 	}
 	
 	// Sort
@@ -109,9 +108,7 @@ public class ResultFile {
 	@Override public String toString() {
 		StringBuilder b = new StringBuilder();
 		b.append("\n");
-		for (String s : searches)
-			b.append(s + "\n");
-		b.append(hash + " " + size + " bytes, " + points + " points\n");
+		b.append(search  + " " + hash + " " + size + " bytes, " + points + " points\n");
 		for (Name n : names)
 			b.append("  " + n.toString() + "\n");
 		b.append(" ");
