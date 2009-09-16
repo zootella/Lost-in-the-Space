@@ -312,6 +312,17 @@ class UDPHostCacheImpl implements UDPHostCache {
     @Override
     public void loadDefaults() {
         // ADD DEFAULT UDP HOST CACHES HERE.
+
+        createAndAdd("gnutelladev1.udp-host-cache.com", 1234);
+        createAndAdd("gnutelladev2.udp-host-cache.com", 5678);        
+        createAndAdd("secondary.udp-host-cache.com", 9999);
+        createAndAdd("tertiary.udp-host-cache.com", 9999);
+    	
+        createAndAdd("ein.gtkg.net", 60666);
+        createAndAdd("zwei.gtkg.net", 61666);
+        createAndAdd("drei.gtkg.net", 62666);
+        createAndAdd("leet.gtkg.org", 1337);
+        createAndAdd("sissy.gtkg.org", 51557);
     }
 
     /**

@@ -21,7 +21,7 @@ public class DaapSettings extends LimeProps {
      */
     @InspectablePrimitive("share with itunes")
     public static BooleanSetting DAAP_ENABLED =
-	    FACTORY.createBooleanSetting("DAAP_ENABLED", true);
+	    FACTORY.createBooleanSetting("DAAP_ENABLED", false);
 	
     
     /**

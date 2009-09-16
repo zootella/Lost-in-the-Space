@@ -27,7 +27,7 @@ public final class LimeWireUtils {
 	 * Constant for the current version of LimeWire.
 	 */
     @InspectablePrimitive("limewire version")
-	private static final String LIMEWIRE_VERSION = "@version@";
+	private static final String LIMEWIRE_VERSION = "5.2.13";
     
     /**
      * The current revision of the BitTorrent protocol implementation.

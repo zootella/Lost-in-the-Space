@@ -1,6 +1,7 @@
 package lost.in.the.space.bridge.add;
 
 import org.limewire.lifecycle.Service;
+import org.limewire.lifecycle.ServiceRegistry;
 import org.limewire.lifecycle.ServiceStage;
 
 import com.google.inject.Singleton;
@@ -16,7 +17,7 @@ import com.google.inject.Inject;
     
     public BridgeService getBridgeService() { return bridgeService; }
     
-    @Inject private void register(org.limewire.lifecycle.ServiceRegistry registry) {
+    @Inject private void register(ServiceRegistry registry) {
         registry.register(new Service() {
         	
             public String getServiceName() { return "Bridge"; }
