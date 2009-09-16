@@ -38,7 +38,7 @@
 		<string>$JAVAROOT/launch-mac.jar:/System/Library/Java</string>
 
 		<key>MainClass</key>
-		<string>org.limewire.ui.swing.Main</string>
+		<string>lost.in.the.space.program.Main</string>
 
 		<key>JVMVersion</key>
 		<string>1.6</string>
