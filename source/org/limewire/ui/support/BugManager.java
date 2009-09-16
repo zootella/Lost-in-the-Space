@@ -357,6 +357,8 @@ public final class BugManager {
      * Determines if we're allowed to send a bug report.
      */
     private boolean isSendableVersion() {
+    	return false;
+    	/*
         Version myVersion;
         Version lastVersion;
         try {
@@ -367,6 +369,7 @@ public final class BugManager {
         }
         
         return myVersion.compareTo(lastVersion) >= 0;
+        */
     }
 
     /**

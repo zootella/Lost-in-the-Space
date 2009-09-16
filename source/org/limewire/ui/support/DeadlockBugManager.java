@@ -29,6 +29,8 @@ public class DeadlockBugManager {
     
     /** Determines if we're allowed to send a bug report. */
     private static boolean isSendableVersion() {
+    	return false;
+    	/*
         Version myVersion;
         Version lastVersion;
         try {
@@ -39,6 +41,7 @@ public class DeadlockBugManager {
         }
         
         return myVersion.compareTo(lastVersion) >= 0;
+        */
     }
     
     private static void sendToServlet(LocalClientInfo info) {
