@@ -1,6 +1,4 @@
-package lost.in.the.space.bridge.service;
-
-
+package lost.in.the.space.bridge.add;
 
 import org.limewire.lifecycle.Service;
 import org.limewire.lifecycle.ServiceStage;

@@ -5,9 +5,9 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 
-import lost.in.the.space.bridge.service.BridgeGlue;
-import lost.in.the.space.bridge.service.BridgeService;
-import lost.in.the.space.bridge.service.BridgeServiceImpl;
+import lost.in.the.space.bridge.add.BridgeGlue;
+import lost.in.the.space.bridge.add.BridgeService;
+import lost.in.the.space.bridge.add.BridgeServiceImpl;
 
 import org.limewire.common.LimeWireCommonModule;
 import org.limewire.concurrent.AbstractLazySingletonProvider;

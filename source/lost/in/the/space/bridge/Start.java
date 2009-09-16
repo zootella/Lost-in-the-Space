@@ -1,4 +1,4 @@
-package lost.in.the.space.bridge.start;
+package lost.in.the.space.bridge;
 
 import java.lang.reflect.Method;
 import java.util.Locale;
@@ -44,11 +44,11 @@ import com.limegroup.gnutella.browser.ExternalControl;
 import com.limegroup.gnutella.util.LimeWireUtils;
 import com.limegroup.gnutella.util.LogUtils;
 
-/** Initializes (creates, starts, & displays) the LimeWire Core & UI. */
+/** Start LimeWire without putting anything on the screen so the program can use the LimeWire API. */
 public final class Start {
-	
-	// Code taken from LimeWire's Main
 
+	// Code copied from org.limewire.ui.swing.Main, and adapted
+	
     public static void main() {
     	String[] args = new String[] {}; // No command line arguments
         try {
@@ -78,7 +78,7 @@ public final class Start {
         return System.getProperty("os.name", "").toLowerCase(Locale.US).startsWith("mac os x");
     }
 
-	// Code taken from LimeWire's Initializer
+	// Code copied from org.limewire.ui.swing.Initializer, and adapted
 
     /** The log -- set only after Log4J can be determined. */
     private final Log LOG;
@@ -394,6 +394,4 @@ public final class Start {
         System.out.println(msgKey);
         System.exit(1);
     }
-    
 }
-

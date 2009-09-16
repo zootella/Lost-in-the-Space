@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.Point;
 import java.awt.Rectangle;
 
+/** Pixel dimensions that define how big the Window is and where stuff inside it goes. */
 public class Guide {
 
 	// File
@@ -55,10 +56,12 @@ public class Guide {
 	
 	// Icon
 	
+	/** Where the 16 pixel square icon is pictured in skin.png. */
 	public static final Rectangle icon = new Rectangle(keyword.x + 124, keyword.y + 9, 16, 16);
 	
 	// Color
 	
+	/** The coordinates to the pixel in skin.png you can eyedropper to get the font ink color. */
 	public static final Point ink = new Point(keyword.x + 11, keyword.y + 11);
 	public static final Point typeInk = new Point(keyword.x + 31, keyword.y + 11);
 	public static final Point typePage = new Point(keyword.x + 29, keyword.y + 9);

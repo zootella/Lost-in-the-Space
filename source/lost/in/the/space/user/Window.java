@@ -2,16 +2,11 @@ package lost.in.the.space.user;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -20,20 +15,15 @@ import javax.swing.JPanel;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-import lost.in.the.space.program.Bridge;
 import lost.in.the.space.program.Main;
 import lost.in.the.space.program.Program;
-import lost.in.the.space.program.Snippet;
 import net.roydesign.mac.MRJAdapter;
 
-import org.json.JSONObject;
 import org.zootella.cheat.desktop.Desktop;
 import org.zootella.cheat.desktop.Open;
-import org.zootella.cheat.exception.DiskException;
 import org.zootella.cheat.file.Path;
 import org.zootella.cheat.process.Mistake;
 import org.zootella.cheat.state.Close;
-import org.zootella.cheat.state.Once;
 import org.zootella.cheat.state.View;
 import org.zootella.cheat.user.CornerIcon;
 import org.zootella.cheat.user.Face;
@@ -45,25 +35,25 @@ import org.zootella.cheat.user.widget.ClearLabel;
 import org.zootella.cheat.user.widget.Grip;
 import org.zootella.cheat.user.widget.TextField;
 
-/** The main window on the screen. */
+/** The main window on the screen, and Action objects Java calls when the user clicks buttons. */
 public class Window extends Close {
 
 	// Object
 
 	/** Make the program's main window on the screen. */
 	public Window(Program program) {
-		this.program = program;
+		this.program = program; // Save the given link back up to the Program object
 		
 		Face.blend(); // Tell Java how to show the program's user interface
 
-		skin = new Skin(Path.work(Guide.skin), Guide.window);
-		Color ink = skin.color(Guide.ink);
+		skin = new Skin(Path.work(Guide.skin), Guide.window); // Load the Skin image
+		Color ink = skin.color(Guide.ink); // Eyedropper in colors for the text
 		Color typeInk = skin.color(Guide.typeInk);
 		Color typePage = skin.color(Guide.typePage);
 		Color selectInk = skin.color(Guide.selectInk);
 		Color selectPage = skin.color(Guide.selectPage);
 
-		restoreAction = new RestoreAction();
+		restoreAction = new RestoreAction(); // Make Action objects that Java calls when the user clicks
 		exitAction = new ExitAction();
 		closeAction = new CloseAction();
 		chooseAction = new ChooseAction();
@@ -71,11 +61,11 @@ public class Window extends Close {
 		
 		String say;
 		if (Desktop.hasDock())
-			say = "Quit";
+			say = "Quit"; // On Mac, it's called "Quit"
 		else
-			say = "Exit";
+			say = "Exit"; // Windows users are more familiar with "Exit"
 		
-		exit = new ClearButton(exitAction, ink, Guide.font, Guide.exit, null, say);
+		exit = new ClearButton(exitAction, ink, Guide.font, Guide.exit, null, say); // Make widgets for the Window
 		close = new ClearButton(closeAction, ink, Guide.font, Guide.close, null, "Close");
 		choose = new ClearButton(chooseAction, ink, Guide.font, Guide.choose, "Folder", "Choose Folder");
 		open = new ClearButton(openAction, ink, Guide.font, Guide.open, null, "Open Folder");
@@ -85,10 +75,10 @@ public class Window extends Close {
 		extField = new TextField(typeInk, typePage, selectInk, selectPage, Guide.bigFont, Guide.ext);
 		status = new ClearLabel(ink, Guide.font, Guide.status, null);
 		
-		panel = new MyPanel();
-		panel.setLayout(null);
+		panel = new MyPanel(); // The inside of the window that contains all the widgets
+		panel.setLayout(null); // No crazy automatic stretching, please
 		panel.setSize(Guide.window);
-		panel.add(exit.label);
+		panel.add(exit.label); // Add all the widgets we made
 		panel.add(close.label);
 		panel.add(choose.label);
 		panel.add(open.label);
@@ -98,43 +88,44 @@ public class Window extends Close {
 		panel.add(extField.field);
 		panel.add(status.label);
 
-		frame = new JFrame();
-		frame.setUndecorated(true);
-		frame.setResizable(false);
-		frame.setLayout(null);
+		frame = new JFrame(); // The window on the user's desktop
+		frame.setUndecorated(true); // No operating system painted top bar or borders, please
+		frame.setResizable(false); // No stretching
+		frame.setLayout(null); // We'll position things ourselves
 		frame.setSize(Guide.window);
-		frame.setIconImage(skin.image(Guide.icon));
-		frame.setTitle(Main.name);
-		frame.setBounds(Screen.positionSize(frame.getSize().width, frame.getSize().height));
-		frame.setContentPane(panel);
+		frame.setIconImage(skin.image(Guide.icon)); // Icon shows up on the Windows taskbar button
+		frame.setTitle(Main.name); // Title text also shows up on the Windows taskbar button
+		frame.setBounds(Screen.positionSize(frame.getSize().width, frame.getSize().height)); // Pick a random spot on the screen
+		frame.setContentPane(panel); // Add all the insides we just set up above
 
 		if (Desktop.hasTray())
 			icon = new CornerIcon(Main.name, skin.image(Guide.icon), restoreAction, exitAction);
 		else
-			icon = null;
+			icon = null; // On Mac, the dock icon is good enough
 		
-		new Grip(frame, panel);
+		new Grip(frame, panel); // Let the user drag the window around the screen all WinAmp-style
 
-		keywordField.field.getDocument().addDocumentListener(new MyDocumentListener());
+		keywordField.field.getDocument().addDocumentListener(new MyDocumentListener()); // Notice when the user types
 		extField.field.getDocument().addDocumentListener(new MyDocumentListener());
-		frame.addWindowListener(new MyWindowListener()); // Have Java tell us when the user closes the window
-		MRJAdapter.addQuitApplicationListener(new MyQuitActionListener());
-		MRJAdapter.addReopenApplicationListener(new MyReopenActionListener());
+		
+		frame.addWindowListener(new MyWindowListener()); // Find out when the user closes the window from the taskbar
+		MRJAdapter.addQuitApplicationListener(new MyQuitActionListener()); // And from the Mac application menu
+		MRJAdapter.addReopenApplicationListener(new MyReopenActionListener()); // And when she clicks the dock icon
 
-		// Make our inner View object and connect the Model below to it
-		view = new MyView();
+		view = new MyView(); // Make our inner View object and connect the Model below to it
 		program.core.model.add(view); // When the Model below changes, it will call our view.refresh() method
 		view.refresh();
 
-		show(true);
+		show(true); // Show the window on the screen
 	}
 	
+	/** A link back up to the Program object we're a part of. */
 	public final Program program;
 
+	private final Skin skin;
+	public final CornerIcon icon;
 	public final JFrame frame;
 	public final JPanel panel;
-	public final CornerIcon icon;
-	private final Skin skin;
 	
 	private final ClearButton exit;
 	private final ClearButton close;
@@ -146,8 +137,9 @@ public class Window extends Close {
 	private final TextField extField;
 	private final ClearLabel status;
 
+	/** Free all user interface resources when the program closes. */
 	@Override public void close() {
-		if (already()) return;
+		if (already()) return; // Only let the computer past here once
 		close(icon);
 		frame.setVisible(false);
 		frame.dispose(); // Dispose the frame so the process can close
@@ -162,7 +154,8 @@ public class Window extends Close {
 		if (icon != null) // If we have a tray icon
 			icon.show(!show); // Show it in place of the window
 	}
-	private boolean show; // true when the window is on the screen, false when hidden
+	/** true when the window is on the screen, false when it's hidden. */
+	private boolean show;
 
 	// Event
 
@@ -180,7 +173,7 @@ public class Window extends Close {
 		public void changedUpdate(DocumentEvent e) {}
 	}
 	private void update() {
-		program.core.enter(keywordField.field.getText(), extField.field.getText()); // Tell the core
+		program.core.enter(keywordField.field.getText(), extField.field.getText()); // Tell the Core what the user typed
 	}
 	
 	// Windows and Mac
@@ -189,8 +182,8 @@ public class Window extends Close {
 	private class MyWindowListener extends WindowAdapter {
 		public void windowClosing(WindowEvent w) {
 			try {
-				show(false);
-			} catch (Exception e) { Mistake.stop(e); }
+				show(false); // Hide the window
+			} catch (Exception e) { Mistake.stop(e); } // Stop the program if an Exception we didn't expect happens
 		}
 	}
 
@@ -261,8 +254,8 @@ public class Window extends Close {
 					return; // The user pressed Cancel
 				
 				String s = chooser.getSelectedFile().getAbsolutePath();
-				String message = program.core.share(s);
-				if (message != null)
+				String message = program.core.share(s); // Give the path text to the Core
+				if (message != null) // If it didn't like it, show the message text it gave us to the user
 					JOptionPane.showMessageDialog(frame, message, Main.name, JOptionPane.WARNING_MESSAGE);
 
 			} catch (Exception e) { Mistake.stop(e); }
@@ -276,52 +269,27 @@ public class Window extends Close {
 		public OpenAction() { super("Open"); }
 		public void actionPerformed(ActionEvent a) {
 			try {
-				
-				/*
-
-				// Snippet
-				Snippet.snippet();
-
-				// Download
-				if (downloadOnce.once()) {
-					JSONObject p = new JSONObject();
-					p.put("guid", keywordField.field.getText());
-					p.put("hash", extField.field.getText());
-					p.put("path", program.core.share().add("downloaded.mp3").toString());
-					
-					JSONObject o = new JSONObject();
-					o.put("download", p);
-					
-					program.bridge.sendDown(o);
-				} else {
-					program.bridge.sendDown(Bridge.say("progress"));
-				}
-
-				*/
-				
-				Open.file(program.core.share());
+				Open.file(program.core.share()); // Pop open Windows Explorer or the Mac Finder
 			} catch (Exception e) { Mistake.stop(e); }
 		}
 	}
-	
-	private final Once downloadOnce = new Once();
 
 	// View
 
-	// When our Model underneath changes, it calls these methods
+	/** When the Core's Model underneath changes, it calls these methods. */
 	private final View view;
 	private class MyView implements View {
 
-		// The Model beneath changed, we need to update what we show the user
+		/** The Model beneath changed, we need to update what we show the user. */
 		public void refresh() {
 			Refresh.text(open.label, program.core.model.share());
 			Refresh.text(status.label, program.core.model.status());
 		}
 
-		// The Model beneath closed, take this View off the screen
+		/** The Model beneath closed, take this View off the screen. */
 		public void vanish() { close(me()); }
 	}
 	
-	/** Give inner classes a link to this outer object. */
+	/** Give code in inner classes a link to this outer object. */
 	private Window me() { return this; }
 }

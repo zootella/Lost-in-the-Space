@@ -1,12 +1,12 @@
-package lost.in.the.space.bridge.service;
+package lost.in.the.space.bridge.add;
 
 import java.io.File;
 import java.io.IOException;
 
+import lost.in.the.space.bridge.keep.SearchWithResults;
 import lost.in.the.space.bridge.my.MyLifecycleEventListener;
 import lost.in.the.space.bridge.my.MySearchDetails;
 import lost.in.the.space.bridge.my.MySearchListener;
-import lost.in.the.space.bridge.search.SearchWithResults;
 import lost.in.the.space.program.Bridge;
 
 import org.json.JSONException;
@@ -33,37 +33,40 @@ import com.limegroup.gnutella.URN;
 import com.limegroup.gnutella.library.FileCollectionManager;
 import com.limegroup.gnutella.library.SharedFileCollection;
 
+/** BridgeServiceImpl is a new part we're adding to LimeWire to connect the bottom of Bridge to the LimeWire API beneath. */
 @Singleton public class BridgeServiceImpl implements BridgeService {
 	
 	// Inject
 
-	@Inject public BridgeServiceImpl(
+	/** Make BridgeServiceImpl, a part we're adding to LimeWire at the bottom of the Bridge. */
+	@Inject public BridgeServiceImpl( // Name the parts of LimeWire we want here, and Google Guice will magically inject them for us
 		LifecycleManager lifecycleManager,
 		FileCollectionManager fileCollectionManager,
 		SearchFactory searchFactory,
 		DownloadListManager downloadListManager) {
 		
-		// Save references to injected parts of LimeWire
-		this.lifecycleManager = lifecycleManager;
+		this.lifecycleManager = lifecycleManager; // Save the references Guice injection gave us
 		this.fileCollectionManager = fileCollectionManager;
 		this.searchFactory = searchFactory;
 		this.downloadListManager = downloadListManager;
 
 		update = new Update(new MyReceive());
-		update.send(); // There may already be a message waiting for us
-		bridge = Bridge.instance(); // Connect to the program's Bridge that lets us talk to the window above
-		bridge.updateDown(update); // Sign up to find out when new messages come down
+		update.send(); // There may already be a message waiting for us, look for it very soon
+		bridge = Bridge.instance(); // Connect to the Bridge that lets us talk to the program above
+		bridge.updateDown(update); // Sign up to find out when new messages come down here for us
 		
-		lifecycleManager.addListener(new MyLifecycleEventListener(bridge, update));
+		lifecycleManager.addListener(new MyLifecycleEventListener(bridge, update)); // Find out when LimeWire starts and stops
 	}
 
-	private final LifecycleManager lifecycleManager;
+	private final LifecycleManager lifecycleManager; // Parts of LimeWire Guice injected us access to
 	private final FileCollectionManager fileCollectionManager;
 	private final SearchFactory searchFactory;
 	private final DownloadListManager downloadListManager;
-	
-	private final Update update;
+
+	/** A link to the Bridge object that connects us to the program above. */
 	private final Bridge bridge;
+	/** Our Update object that code can call send() on when something we care about may be different. */
+	private final Update update;
 
 	// Service
 	    
@@ -71,9 +74,8 @@ import com.limegroup.gnutella.library.SharedFileCollection;
 		return org.limewire.i18n.I18nMarker.marktr("Bridge Service");
 	}
 	@Override public void start() {
-		if (!running) {
+		if (!running)
 			running = true;
-		}
 	}
 	public void restart() {}
 	public void stop() {
@@ -86,40 +88,36 @@ import com.limegroup.gnutella.library.SharedFileCollection;
 
 	// Sort
 
-	// Java calls this when a new message was sent down for us
+	/** Java calls this very soon after the program sent a new message down the Bridge for us. */
 	private class MyReceive implements Receive {
 		@Override public void receive() throws Exception {
 			
-			// Don't do messages until this service is running
-			if (!running) return;
+			if (!running) return; // Don't do messages until this service is running
 
-			// Loop for each message that has arrived from the ui above
-			while (true) {
+			while (true) { // Loop for each message that has arrived from the program above
 				JSONObject o = bridge.receiveDown();
 				if (o == null)
 					return; // No more messages right now
 				
-				// Do the message
-				JSONObject r = message(o);
+				JSONObject r = message(o); // Do the message
 				if (r != null)
-					bridge.sendUp(r); // Send a response
+					bridge.sendUp(r); // Send the response back up
 			}
 		}
 	}
 
-	/** Do what o from the ui above tells us to do, and send a reply back up or null for none. */
+	/** Do what message o from the program above tells us to do, and send a reply back up or null for none. */
 	public JSONObject message(JSONObject o) {
 		try {
 
-			// Sort the given command
-			if      (o.has("quit"))     return quit(o);
+			if      (o.has("quit"))     return quit(o); // Sort and do the given message
 			else if (o.has("share"))    return share(o);
 			else if (o.has("search"))   return search(o);
 			else if (o.has("stop"))     return stop(o);
 			else if (o.has("download")) return download(o);
 			else if (o.has("progress")) return progress(o);
 			else if (o.has("cancel"))   return cancel(o);
-			else return Bridge.say("unknown"); // Unknown command
+			else return Bridge.say("unknown"); // Unknown message
 
 		} catch (Exception e) { return Bridge.say("exception", e.toString()); } // Return the exception
 	}
@@ -167,7 +165,7 @@ import com.limegroup.gnutella.library.SharedFileCollection;
 		return Bridge.say("search", ((CoreSearch)search).getQueryGuid().toString()); // Send up the GUID we got
 	}
 	
-	/** Stop a search you made. */
+	/** Stop a Gnutella search we previously started. */
 	private JSONObject stop(JSONObject o) throws JSONException {
 		String s = o.getString("stop");
 		GUID g = new GUID(s);
@@ -177,7 +175,7 @@ import com.limegroup.gnutella.library.SharedFileCollection;
 	
 	// Download
 	
-	/** Download a file by its hash that you've seen in search results. */
+	/** Download a file by its hash that we've seen in search results. */
 	private JSONObject download(JSONObject o) throws JSONException, DownloadException, IOException {
 		o = o.getJSONObject("download"); // Move down into the value
 		
