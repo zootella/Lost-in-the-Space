@@ -15,13 +15,13 @@ public class Program extends Close { // This class has a close() method we have 
 
 	/** Start the program. */
 	public Program() {
-		this.core = new Core(this); // First, make the Core of the program
-		this.window = new Window(this); // Then, put the Window on the screen
-
 		update = new Update(new MyReceive());
 		update.send();
 		bridge = Bridge.instance(); // Connect to the Bridge that lets us talk to the LimeWire API below
 		bridge.updateUp(update); // We want to find out when messages come up from the LimeWire API
+		
+		this.core = new Core(this); // First, make the Core of the program
+		this.window = new Window(this); // Then, put the Window on the screen
 	}
 
 	/** The Window on the screen that interacts with the user. */

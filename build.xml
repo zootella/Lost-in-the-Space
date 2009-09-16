@@ -301,19 +301,19 @@
 		<!-- Make empty jars with just a main class and classpath in the manifest, adding the main jar and the platform-specific jars -->
 		<jar jarfile="work/launch-linux.jar">
 			<manifest>
-				<attribute name="Main-Class" value="org.limewire.ui.swing.Main"/>
+				<attribute name="Main-Class" value="lost.in.the.space.program.Main"/>
 				<attribute name="Class-Path" value="gnutella.jar _desktop-LINUX_jdic_stub.jar"/>
 			</manifest>
 		</jar>
 		<jar jarfile="work/launch-mac.jar">
 			<manifest>
-				<attribute name="Main-Class" value="org.limewire.ui.swing.Main"/>
+				<attribute name="Main-Class" value="lost.in.the.space.program.Main"/>
 				<attribute name="Class-Path" value="gnutella.jar _desktop-MAC_MRJAdapter.jar"/>
 			</manifest>
 		</jar>
 		<jar jarfile="work/launch-win.jar">
 			<manifest>
-				<attribute name="Main-Class" value="org.limewire.ui.swing.Main"/>
+				<attribute name="Main-Class" value="lost.in.the.space.program.Main"/>
 				<attribute name="Class-Path" value="gnutella.jar _desktop-WIN_jdic_stub.jar _itunes-WIN_iTunes-0.0.1.jar _itunes-WIN_jacob-1.14.3.jar"/> <!-- -->
 			</manifest>
 		</jar>

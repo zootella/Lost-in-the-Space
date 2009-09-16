@@ -15,7 +15,7 @@ Lost in the Space.app\\Contents\\Resources\\Java
 The package name of the Main class.
 Separate parts with forward slashes, not periods.
 ==Main==
-org/limewire/ui/swing/Main
+lost/in/the/space/program/Main
 
 Parameters to start the Java virtual machine.
 Put each parameter on a single line.
