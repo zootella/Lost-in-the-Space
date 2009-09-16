@@ -208,7 +208,7 @@ public final class SwingUiSettings extends LimeProps {
      * Setting that globally enables or disables notifications.
      */
     public static final BooleanSetting SHOW_NOTIFICATIONS = 
-        FACTORY.createBooleanSetting("SHOW_NOTIFICATIONS", true);
+        FACTORY.createBooleanSetting("SHOW_NOTIFICATIONS", false);
 
     /**
      * Setting that globally enables or disables notification sounds.
