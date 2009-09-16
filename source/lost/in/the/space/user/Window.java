@@ -109,8 +109,10 @@ public class Window extends Close {
 		extField.field.getDocument().addDocumentListener(new MyDocumentListener());
 		
 		frame.addWindowListener(new MyWindowListener()); // Find out when the user closes the window from the taskbar
-		MRJAdapter.addQuitApplicationListener(new MyQuitActionListener()); // And from the Mac application menu
-		MRJAdapter.addReopenApplicationListener(new MyReopenActionListener()); // And when she clicks the dock icon
+		if (Desktop.hasDock()) {
+			MRJAdapter.addQuitApplicationListener(new MyQuitActionListener()); // And from the Mac application menu
+			MRJAdapter.addReopenApplicationListener(new MyReopenActionListener()); // And when she clicks the dock icon
+		}
 
 		view = new MyView(); // Make our inner View object and connect the Model below to it
 		program.core.model.add(view); // When the Model below changes, it will call our view.refresh() method
