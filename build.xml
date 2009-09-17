@@ -319,4 +319,20 @@
 		</jar>
 
 	</target>
+	<target name="zip" description="Bundle portable program files into a zip for distribution">
+	
+		<delete dir="zip"/>
+		<delete file="Lost-in-the-Space.zip"/>
+
+		<copy todir="zip">
+			<fileset dir="deploy/shell"/>
+		</copy>
+
+		<copy todir="zip/Lost in the Space.app/Contents/Resources/Java">
+			<fileset dir="work"/> <!-- Doesn't overwrite the 2 files already there -->
+		</copy>
+
+		<zip destfile="Lost-in-the-Space.zip" basedir="zip"/>
+
+	</target>
 </project>
