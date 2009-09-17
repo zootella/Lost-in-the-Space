@@ -314,25 +314,30 @@
 		<jar jarfile="work/launch-win.jar">
 			<manifest>
 				<attribute name="Main-Class" value="lost.in.the.space.program.Main"/>
-				<attribute name="Class-Path" value="gnutella.jar _desktop-WIN_jdic_stub.jar _itunes-WIN_iTunes-0.0.1.jar _itunes-WIN_jacob-1.14.3.jar"/> <!-- -->
+				<attribute name="Class-Path" value="gnutella.jar _desktop-WIN_jdic_stub.jar _itunes-WIN_iTunes-0.0.1.jar _itunes-WIN_jacob-1.14.3.jar"/>
 			</manifest>
 		</jar>
 
 	</target>
 	<target name="zip" description="Bundle portable program files into a zip for distribution">
-	
+
+		<!-- Delete previous attempts -->
 		<delete dir="zip"/>
 		<delete file="Lost-in-the-Space.zip"/>
 
+		<!-- Start with the portable shell -->
 		<copy todir="zip">
 			<fileset dir="deploy/shell"/>
 		</copy>
 
+		<!-- Copy in the program files from the working directory -->
 		<copy todir="zip/Lost in the Space.app/Contents/Resources/Java">
-			<fileset dir="work"/> <!-- Doesn't overwrite the 2 files already there -->
+			<fileset dir="work"/> <!-- Doesn't overwrite the 2 portable shell files already there -->
 		</copy>
 
-		<zip destfile="Lost-in-the-Space.zip" basedir="zip"/>
+		<!-- Make the zip -->
+		<copy file="deploy/launch/mac/mac.zip" tofile="Lost-in-the-Space.zip"/> <!-- Contains Mac launcher with execute bit set -->
+		<zip destfile="Lost-in-the-Space.zip" basedir="zip" update="true"/>
 
 	</target>
 </project>
