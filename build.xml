@@ -9,7 +9,7 @@
 
 		<!-- Start with launch files -->
 		<copy todir="work">
-			<fileset dir="deploy"/>
+			<fileset dir="deploy/work"/>
 		</copy>
 
 		<!-- Copy down trees of resource files that will end up in the main jar -->
