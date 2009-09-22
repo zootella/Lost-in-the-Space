@@ -46,15 +46,15 @@ public class Pick {
 		
 		// 1 point for middle number of peers, too many is likely spam, too few is likely to work
 		Collections.shuffle(results);
-		Collections.sort(results, new ResultFile.BySize());
+		Collections.sort(results, new ResultFile.ByPeer());
 		mediocrity(results);
 
 		// 1 point for middle size
 		Collections.shuffle(results);
-		Collections.sort(results, new ResultFile.ByPeer());
+		Collections.sort(results, new ResultFile.BySize());
 		mediocrity(results);
 		
-		// 1 point for middle name length, too many is likely nonsense
+		// 1 point for middle name length, exact short is spam, too long matches everything
 		Collections.shuffle(results);
 		Collections.sort(results, new ResultFile.ByName());
 		mediocrity(results);
